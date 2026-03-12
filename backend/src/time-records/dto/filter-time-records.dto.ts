@@ -1,9 +1,4 @@
-import {
-  IsOptional,
-  IsDateString,
-  IsUUID,
-  IsEnum,
-} from 'class-validator';
+import { IsOptional, IsDateString, IsUUID, IsEnum } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { TimeRecordType, RecordMethod } from '@prisma/client';
 

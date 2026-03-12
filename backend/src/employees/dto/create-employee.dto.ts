@@ -1,9 +1,4 @@
-import {
-  IsString,
-  IsOptional,
-  IsUUID,
-  IsDateString,
-} from 'class-validator';
+import { IsString, IsOptional, IsUUID, IsDateString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateEmployeeDto {

@@ -40,7 +40,9 @@ export class EmployeesService {
         registration: createEmployeeDto.registration,
         position: createEmployeeDto.position,
         department: createEmployeeDto.department,
-        hireDate: createEmployeeDto.hireDate ? new Date(createEmployeeDto.hireDate) : null,
+        hireDate: createEmployeeDto.hireDate
+          ? new Date(createEmployeeDto.hireDate)
+          : null,
         workScheduleId: createEmployeeDto.workScheduleId,
       },
       include: { user: { select: { id: true, name: true, email: true } } },
@@ -62,7 +64,15 @@ export class EmployeesService {
     const profile = await this.prisma.employeeProfile.findUnique({
       where: { id },
       include: {
-        user: { select: { id: true, name: true, email: true, role: true, companyId: true } },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            companyId: true,
+          },
+        },
         workSchedule: true,
       },
     });
@@ -85,7 +95,11 @@ export class EmployeesService {
     return profile;
   }
 
-  async update(id: string, updateEmployeeDto: UpdateEmployeeDto, requestingUser: any) {
+  async update(
+    id: string,
+    updateEmployeeDto: UpdateEmployeeDto,
+    requestingUser: any,
+  ) {
     await this.findOne(id, requestingUser);
 
     const data: any = { ...updateEmployeeDto };

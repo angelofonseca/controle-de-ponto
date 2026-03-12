@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateWorkScheduleDto } from './dto/create-work-schedule.dto';
 import { UpdateWorkScheduleDto } from './dto/update-work-schedule.dto';
@@ -40,7 +44,11 @@ export class WorkSchedulesService {
     return schedule;
   }
 
-  async update(id: string, updateDto: UpdateWorkScheduleDto, requestingUser: any) {
+  async update(
+    id: string,
+    updateDto: UpdateWorkScheduleDto,
+    requestingUser: any,
+  ) {
     await this.findOne(id, requestingUser);
 
     return this.prisma.workSchedule.update({

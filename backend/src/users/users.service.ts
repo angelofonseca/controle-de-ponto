@@ -104,7 +104,10 @@ export class UsersService {
     }
 
     // Employee can only see their own data
-    if (requestingUser.role === Role.EMPLOYEE && user.id !== requestingUser.sub) {
+    if (
+      requestingUser.role === Role.EMPLOYEE &&
+      user.id !== requestingUser.sub
+    ) {
       throw new ForbiddenException('Acesso negado');
     }
 
@@ -117,7 +120,7 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto, requestingUser: any) {
-    const user = await this.findOne(id, requestingUser);
+    await this.findOne(id, requestingUser);
 
     const data: any = { ...updateUserDto };
 

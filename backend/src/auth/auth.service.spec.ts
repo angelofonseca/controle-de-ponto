@@ -7,7 +7,6 @@ import { UnauthorizedException } from '@nestjs/common';
 describe('AuthService', () => {
   let service: AuthService;
   let prismaService: jest.Mocked<PrismaService>;
-  let jwtService: jest.Mocked<JwtService>;
 
   beforeEach(async () => {
     const mockPrisma = {
@@ -37,7 +36,6 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService);
     prismaService = module.get(PrismaService);
-    jwtService = module.get(JwtService);
   });
 
   it('should be defined', () => {

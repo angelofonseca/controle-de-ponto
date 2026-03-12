@@ -4,7 +4,7 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
-import { TimeRecordType, RecordMethod, Role } from '@prisma/client';
+import { TimeRecordType, RecordMethod } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateManualTimeRecordDto } from './dto/create-manual-time-record.dto';
 import { CreateQrcodeTimeRecordDto } from './dto/create-qrcode-time-record.dto';
@@ -207,30 +207,42 @@ export class TimeRecordsService {
     let totalMinutes: number | null = null;
     let lateMinutes = 0;
 
-    const clockIn = todayRecords.find(r => r.type === TimeRecordType.CLOCK_IN);
-    const clockOut = todayRecords.find(r => r.type === TimeRecordType.CLOCK_OUT);
+    const clockIn = todayRecords.find(
+      (r) => r.type === TimeRecordType.CLOCK_IN,
+    );
+    const clockOut = todayRecords.find(
+      (r) => r.type === TimeRecordType.CLOCK_OUT,
+    );
 
     if (clockIn && clockOut) {
       status = 'COMPLETED';
       const clockInTime = new Date(clockIn.recordedAt);
       const clockOutTime = new Date(clockOut.recordedAt);
-      const breakStart = todayRecords.find(r => r.type === TimeRecordType.BREAK_START);
-      const breakEnd = todayRecords.find(r => r.type === TimeRecordType.BREAK_END);
+      const breakStart = todayRecords.find(
+        (r) => r.type === TimeRecordType.BREAK_START,
+      );
+      const breakEnd = todayRecords.find(
+        (r) => r.type === TimeRecordType.BREAK_END,
+      );
 
       let breakMinutes = 0;
       if (breakStart && breakEnd) {
         breakMinutes = Math.floor(
-          (new Date(breakEnd.recordedAt).getTime() - new Date(breakStart.recordedAt).getTime()) / 60000,
+          (new Date(breakEnd.recordedAt).getTime() -
+            new Date(breakStart.recordedAt).getTime()) /
+            60000,
         );
       }
 
-      totalMinutes = Math.floor(
-        (clockOutTime.getTime() - clockInTime.getTime()) / 60000,
-      ) - breakMinutes;
+      totalMinutes =
+        Math.floor((clockOutTime.getTime() - clockInTime.getTime()) / 60000) -
+        breakMinutes;
     } else if (clockIn) {
       const workSchedule = user?.employeeProfile?.workSchedule;
       if (workSchedule) {
-        const [startHour, startMin] = workSchedule.startTime.split(':').map(Number);
+        const [startHour, startMin] = workSchedule.startTime
+          .split(':')
+          .map(Number);
         const expectedStart = new Date(date);
         expectedStart.setHours(startHour, startMin, 0, 0);
         const actualStart = new Date(clockIn.recordedAt);
@@ -268,7 +280,7 @@ export class TimeRecordsService {
   private calculateExpectedMinutes(schedule: any): number {
     const [startHour, startMin] = schedule.startTime.split(':').map(Number);
     const [endHour, endMin] = schedule.endTime.split(':').map(Number);
-    const totalMinutes = (endHour * 60 + endMin) - (startHour * 60 + startMin);
+    const totalMinutes = endHour * 60 + endMin - (startHour * 60 + startMin);
     return totalMinutes - (schedule.breakDuration || 60);
   }
 }

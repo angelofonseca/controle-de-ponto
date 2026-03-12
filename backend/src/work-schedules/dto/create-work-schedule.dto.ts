@@ -26,13 +26,19 @@ export class CreateWorkScheduleDto {
   @IsNotEmpty()
   endTime: string;
 
-  @ApiPropertyOptional({ example: 60, description: 'Duração do intervalo em minutos' })
+  @ApiPropertyOptional({
+    example: 60,
+    description: 'Duração do intervalo em minutos',
+  })
   @IsOptional()
   @IsNumber()
   @Min(0)
   breakDuration?: number;
 
-  @ApiProperty({ example: [1, 2, 3, 4, 5], description: 'Dias da semana (0=Dom, 1=Seg, ..., 6=Sáb)' })
+  @ApiProperty({
+    example: [1, 2, 3, 4, 5],
+    description: 'Dias da semana (0=Dom, 1=Seg, ..., 6=Sáb)',
+  })
   @IsArray()
   @ArrayMinSize(1)
   @IsNumber({}, { each: true })
@@ -40,7 +46,10 @@ export class CreateWorkScheduleDto {
   @Max(6, { each: true })
   workingDays: number[];
 
-  @ApiPropertyOptional({ example: 10, description: 'Tolerância de atraso em minutos' })
+  @ApiPropertyOptional({
+    example: 10,
+    description: 'Tolerância de atraso em minutos',
+  })
   @IsOptional()
   @IsNumber()
   @Min(0)
