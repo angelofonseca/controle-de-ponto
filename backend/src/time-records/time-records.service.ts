@@ -4,7 +4,7 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
-import { TimeRecordType, RecordMethod } from '@prisma/client';
+import { TimeRecordType, RecordMethod } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateManualTimeRecordDto } from './dto/create-manual-time-record.dto';
 import { CreateQrcodeTimeRecordDto } from './dto/create-qrcode-time-record.dto';

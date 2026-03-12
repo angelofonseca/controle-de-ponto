@@ -1,5 +1,5 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
-import { AttendanceStatus, Role } from '@prisma/client';
+import { AttendanceStatus, Role } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { FilterAttendanceDto } from './dto/filter-attendance.dto';
 

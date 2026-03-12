@@ -1,6 +1,6 @@
 import { IsEnum, IsOptional, IsString, IsDateString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { TimeRecordType } from '@prisma/client';
+import { TimeRecordType } from '../../generated/prisma/enums';
 
 export class CreateManualTimeRecordDto {
   @ApiProperty({ enum: TimeRecordType })

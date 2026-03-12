@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { Role } from '../generated/prisma/enums';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -20,7 +20,7 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 @ApiBearerAuth('JWT-auth')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Public()
   @Post()
@@ -33,6 +33,13 @@ export class UsersController {
   @ApiOperation({ summary: 'Obter dados do usuário autenticado' })
   async findMe(@CurrentUser() user: any) {
     return this.usersService.findMe(user.sub);
+  }
+
+  @Get('company')
+  @Roles(Role.COMPANY_ADMIN)
+  @ApiOperation({ summary: 'Listar usuários da empresa' })
+  async findAllByCompany(@CurrentUser() user: any) {
+    return this.usersService.findAllByCompany(user.companyId);
   }
 
   @Get(':id')

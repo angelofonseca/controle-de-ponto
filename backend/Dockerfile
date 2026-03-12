@@ -5,7 +5,7 @@ FROM node:20-alpine AS base
 
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat openssl
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Stage 2: Dependencies
@@ -29,7 +29,7 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["sh", "-c", "npx prisma generate && npm run start:dev"]
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Stage 4: Build
@@ -49,7 +49,7 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat curl
+RUN apk add --no-cache libc6-compat openssl curl
 
 ENV NODE_ENV=production
 

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Query, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { Role } from '../generated/prisma/enums';
 import { AttendanceService } from './attendance.service';
 import { FilterAttendanceDto } from './dto/filter-attendance.dto';
 import { Roles } from '../common/decorators/roles.decorator';

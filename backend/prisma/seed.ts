@@ -1,7 +1,10 @@
-import { PrismaClient, Role } from '@prisma/client';
+import 'dotenv/config';
 import * as bcrypt from 'bcryptjs';
+import { PrismaClient } from '../src/generated/prisma/client';
+import { Role } from '../src/generated/prisma/enums';
+import { createPrismaClientOptions } from '../src/prisma/prisma-client-options';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient(createPrismaClientOptions());
 
 async function main() {
   console.log('🌱 Starting database seed...');
@@ -61,9 +64,27 @@ async function main() {
   const employeePassword = await bcrypt.hash('Employee@123', 10);
 
   const employees = [
-    { name: 'João Silva', email: 'joao.silva@empresademo.com', registration: 'EMP001', position: 'Desenvolvedor', department: 'TI' },
-    { name: 'Maria Santos', email: 'maria.santos@empresademo.com', registration: 'EMP002', position: 'Designer', department: 'Marketing' },
-    { name: 'Carlos Oliveira', email: 'carlos.oliveira@empresademo.com', registration: 'EMP003', position: 'Analista', department: 'Financeiro' },
+    {
+      name: 'João Silva',
+      email: 'joao.silva@empresademo.com',
+      registration: 'EMP001',
+      position: 'Desenvolvedor',
+      department: 'TI',
+    },
+    {
+      name: 'Maria Santos',
+      email: 'maria.santos@empresademo.com',
+      registration: 'EMP002',
+      position: 'Designer',
+      department: 'Marketing',
+    },
+    {
+      name: 'Carlos Oliveira',
+      email: 'carlos.oliveira@empresademo.com',
+      registration: 'EMP003',
+      position: 'Analista',
+      department: 'Financeiro',
+    },
   ];
 
   for (const emp of employees) {

@@ -2,12 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -55,8 +56,8 @@ model Company {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  users        User[]
-  workSchedules WorkSchedule[]
+  users          User[]
+  workSchedules  WorkSchedule[]
   qrCodeSessions QrCodeSession[]
 
   @@map("companies")
@@ -72,13 +73,13 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  companyId String @map("company_id")
+  companyId String  @map("company_id")
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  refreshTokens  RefreshToken[]
+  refreshTokens   RefreshToken[]
   employeeProfile EmployeeProfile?
-  timeRecords    TimeRecord[]
-  attendanceDays AttendanceDay[]
+  timeRecords     TimeRecord[]
+  attendanceDays  AttendanceDay[]
 
   @@map("users")
 }
@@ -97,33 +98,33 @@ model RefreshToken {
 }
 
 model EmployeeProfile {
-  id           String   @id @default(uuid())
-  registration String?  @unique
+  id           String    @id @default(uuid())
+  registration String?   @unique
   position     String?
   department   String?
   hireDate     DateTime? @map("hire_date")
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
 
   userId String @unique @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  workScheduleId String?      @map("work_schedule_id")
+  workScheduleId String?       @map("work_schedule_id")
   workSchedule   WorkSchedule? @relation(fields: [workScheduleId], references: [id])
 
   @@map("employee_profiles")
 }
 
 model WorkSchedule {
-  id            String   @id @default(uuid())
-  name          String
-  startTime     String   @map("start_time")
-  endTime       String   @map("end_time")
-  breakDuration Int      @default(60) @map("break_duration")
-  workingDays   Int[]    @map("working_days")
-  toleranceMinutes Int   @default(10) @map("tolerance_minutes")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  id               String   @id @default(uuid())
+  name             String
+  startTime        String   @map("start_time")
+  endTime          String   @map("end_time")
+  breakDuration    Int      @default(60) @map("break_duration")
+  workingDays      Int[]    @map("working_days")
+  toleranceMinutes Int      @default(10) @map("tolerance_minutes")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
 
   companyId String  @map("company_id")
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -151,15 +152,15 @@ model TimeRecord {
 }
 
 model AttendanceDay {
-  id             String           @id @default(uuid())
-  date           DateTime         @db.Date
-  status         AttendanceStatus @default(IN_PROGRESS)
-  totalMinutes   Int?             @map("total_minutes")
-  expectedMinutes Int?            @map("expected_minutes")
-  lateMinutes    Int?             @default(0) @map("late_minutes")
-  notes          String?
-  createdAt      DateTime         @default(now()) @map("created_at")
-  updatedAt      DateTime         @updatedAt @map("updated_at")
+  id              String           @id @default(uuid())
+  date            DateTime         @db.Date
+  status          AttendanceStatus @default(IN_PROGRESS)
+  totalMinutes    Int?             @map("total_minutes")
+  expectedMinutes Int?             @map("expected_minutes")
+  lateMinutes     Int?             @default(0) @map("late_minutes")
+  notes           String?
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -169,13 +170,13 @@ model AttendanceDay {
 }
 
 model QrCodeSession {
-  id          String    @id @default(uuid())
-  token       String    @unique @default(uuid())
+  id          String         @id @default(uuid())
+  token       String         @unique @default(uuid())
   allowedType TimeRecordType @map("allowed_type")
-  expiresAt   DateTime  @map("expires_at")
-  used        Boolean   @default(false)
-  usedAt      DateTime? @map("used_at")
-  createdAt   DateTime  @default(now()) @map("created_at")
+  expiresAt   DateTime       @map("expires_at")
+  used        Boolean        @default(false)
+  usedAt      DateTime?      @map("used_at")
+  createdAt   DateTime       @default(now()) @map("created_at")
 
   companyId String  @map("company_id")
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)

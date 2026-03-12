@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { Role } from '../generated/prisma/enums';
 import { TimeRecordsService } from './time-records.service';
 import { CreateManualTimeRecordDto } from './dto/create-manual-time-record.dto';
 import { CreateQrcodeTimeRecordDto } from './dto/create-qrcode-time-record.dto';

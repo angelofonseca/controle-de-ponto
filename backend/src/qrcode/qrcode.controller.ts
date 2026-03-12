@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { Role } from '../generated/prisma/enums';
 import { QrcodeService } from './qrcode.service';
 import { CreateQrCodeSessionDto } from './dto/create-qr-code-session.dto';
 import { Roles } from '../common/decorators/roles.decorator';

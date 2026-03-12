@@ -8,7 +8,7 @@ import {
   IsUUID,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { Role } from '../../generated/prisma/enums';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'colaborador@empresa.com' })
