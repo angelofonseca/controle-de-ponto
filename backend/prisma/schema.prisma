@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────────
+
+enum Role {
+  COMPANY_ADMIN
+  EMPLOYEE
+}
+
+enum TimeRecordType {
+  CLOCK_IN
+  BREAK_START
+  BREAK_END
+  CLOCK_OUT
+}
+
+enum RecordMethod {
+  MANUAL
+  QR_CODE
+}
+
+enum AttendanceStatus {
+  ON_TIME
+  LATE
+  ABSENT
+  IN_PROGRESS
+  COMPLETED
+  INCONSISTENT
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Models
+// ─────────────────────────────────────────────────────────────────
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  cnpj      String?  @unique
+  email     String   @unique
+  phone     String?
+  address   String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  users        User[]
+  workSchedules WorkSchedule[]
+  qrCodeSessions QrCodeSession[]
+
+  @@map("companies")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(EMPLOYEE)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  companyId String @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  refreshTokens  RefreshToken[]
+  employeeProfile EmployeeProfile?
+  timeRecords    TimeRecord[]
+  attendanceDays AttendanceDay[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  revoked   Boolean  @default(false)
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model EmployeeProfile {
+  id           String   @id @default(uuid())
+  registration String?  @unique
+  position     String?
+  department   String?
+  hireDate     DateTime? @map("hire_date")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  workScheduleId String?      @map("work_schedule_id")
+  workSchedule   WorkSchedule? @relation(fields: [workScheduleId], references: [id])
+
+  @@map("employee_profiles")
+}
+
+model WorkSchedule {
+  id            String   @id @default(uuid())
+  name          String
+  startTime     String   @map("start_time")
+  endTime       String   @map("end_time")
+  breakDuration Int      @default(60) @map("break_duration")
+  workingDays   Int[]    @map("working_days")
+  toleranceMinutes Int   @default(10) @map("tolerance_minutes")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  companyId String  @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  employees EmployeeProfile[]
+
+  @@map("work_schedules")
+}
+
+model TimeRecord {
+  id         String         @id @default(uuid())
+  type       TimeRecordType
+  method     RecordMethod   @default(MANUAL)
+  recordedAt DateTime       @map("recorded_at")
+  notes      String?
+  createdAt  DateTime       @default(now()) @map("created_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  qrCodeSessionId String?        @map("qr_code_session_id")
+  qrCodeSession   QrCodeSession? @relation(fields: [qrCodeSessionId], references: [id])
+
+  @@map("time_records")
+}
+
+model AttendanceDay {
+  id             String           @id @default(uuid())
+  date           DateTime         @db.Date
+  status         AttendanceStatus @default(IN_PROGRESS)
+  totalMinutes   Int?             @map("total_minutes")
+  expectedMinutes Int?            @map("expected_minutes")
+  lateMinutes    Int?             @default(0) @map("late_minutes")
+  notes          String?
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@map("attendance_days")
+}
+
+model QrCodeSession {
+  id          String    @id @default(uuid())
+  token       String    @unique @default(uuid())
+  allowedType TimeRecordType @map("allowed_type")
+  expiresAt   DateTime  @map("expires_at")
+  used        Boolean   @default(false)
+  usedAt      DateTime? @map("used_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  companyId String  @map("company_id")
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  timeRecords TimeRecord[]
+
+  @@map("qr_code_sessions")
+}
