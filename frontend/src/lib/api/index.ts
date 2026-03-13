@@ -14,7 +14,19 @@ import type {
 import { authStore } from '$lib/stores/auth';
 import { get } from 'svelte/store';
 
-const BASE_URL = env.PUBLIC_API_URL || 'http://localhost:3000';
+function resolveBaseUrl(): string {
+  if (env.PUBLIC_API_URL) {
+    return env.PUBLIC_API_URL;
+  }
+
+  if (typeof window !== 'undefined') {
+    return `${window.location.protocol}//${window.location.hostname}:3000`;
+  }
+
+  return 'http://localhost:3000';
+}
+
+const BASE_URL = resolveBaseUrl();
 
 class ApiClient {
   private baseUrl: string;
