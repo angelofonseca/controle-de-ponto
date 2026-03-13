@@ -19,7 +19,7 @@ const VALID_SEQUENCE: TimeRecordType[] = [
 
 @Injectable()
 export class TimeRecordsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async createManual(dto: CreateManualTimeRecordDto, requestingUser: any) {
     await this.validateSequence(requestingUser.sub, dto.type);
@@ -220,7 +220,7 @@ export class TimeRecordsService {
         breakMinutes = Math.floor(
           (new Date(breakEnd.recordedAt).getTime() -
             new Date(breakStart.recordedAt).getTime()) /
-            60000,
+          60000,
         );
       }
 

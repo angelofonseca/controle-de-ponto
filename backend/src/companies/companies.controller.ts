@@ -22,7 +22,7 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 @ApiBearerAuth('JWT-auth')
 @Controller('companies')
 export class CompaniesController {
-  constructor(private readonly companiesService: CompaniesService) {}
+  constructor(private readonly companiesService: CompaniesService) { }
 
   @Get('me')
   @Roles(Role.COMPANY_ADMIN)

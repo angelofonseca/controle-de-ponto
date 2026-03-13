@@ -19,7 +19,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   async registerCompanyAdmin(dto: RegisterCompanyAdminDto) {
     const [existingCompanyEmail, existingUserEmail] = await Promise.all([
