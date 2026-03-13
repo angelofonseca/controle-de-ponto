@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import type {
   AuthResponse,
   User,
@@ -14,7 +14,7 @@ import type {
 import { authStore } from '$lib/stores/auth';
 import { get } from 'svelte/store';
 
-const BASE_URL = PUBLIC_API_URL || 'http://localhost:3000';
+const BASE_URL = env.PUBLIC_API_URL || 'http://localhost:3000';
 
 class ApiClient {
   private baseUrl: string;

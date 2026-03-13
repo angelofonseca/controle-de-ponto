@@ -51,6 +51,8 @@ jobs:
 
       - name: Generate Prisma client
         run: npx prisma generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/controle_ponto_test?schema=public
 
       - name: Run Prisma migrations (test)
         run: npx prisma db push

@@ -7,6 +7,9 @@ WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
+ARG PUBLIC_API_URL=http://localhost:3000
+ENV PUBLIC_API_URL=$PUBLIC_API_URL
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Stage 2: Dependencies
 # ─────────────────────────────────────────────────────────────────────────────
@@ -45,6 +48,9 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 RUN apk add --no-cache curl
+
+ARG PUBLIC_API_URL=http://localhost:3000
+ENV PUBLIC_API_URL=$PUBLIC_API_URL
 
 ENV NODE_ENV=production
 

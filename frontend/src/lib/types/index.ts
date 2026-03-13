@@ -86,7 +86,9 @@ export interface QrCodeSession {
   id: string;
   token: string;
   allowedType: TimeRecordType;
+  companyId?: string;
   expiresAt: string;
+  createdAt?: string;
   used: boolean;
   usedAt?: string;
   qrCodeImage?: string;

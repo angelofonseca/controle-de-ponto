@@ -1,4 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,7 +12,8 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) { }
 
   async login(loginDto: LoginDto) {
     const user = await this.prisma.user.findUnique({
@@ -110,15 +112,16 @@ export class AuthService {
     };
 
     const accessToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRES_IN || '15m',
+      secret: this.configService.get<string>('JWT_SECRET', 'default_secret'),
+      expiresIn: this.configService.get<string>('JWT_EXPIRES_IN', '15m'),
     });
 
     const refreshTokenValue = uuidv4();
-    const expiresAt = new Date();
-    const refreshExpiresIn = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
-    const days = parseInt(refreshExpiresIn.replace('d', ''));
-    expiresAt.setDate(expiresAt.getDate() + days);
+    const refreshExpiresIn = this.configService.get<string>(
+      'JWT_REFRESH_EXPIRES_IN',
+      '7d',
+    );
+    const expiresAt = this.createRefreshExpiry(refreshExpiresIn);
 
     await this.prisma.refreshToken.create({
       data: {
@@ -131,7 +134,40 @@ export class AuthService {
     return {
       accessToken,
       refreshToken: refreshTokenValue,
-      expiresIn: process.env.JWT_EXPIRES_IN || '15m',
+      expiresIn: this.configService.get<string>('JWT_EXPIRES_IN', '15m'),
     };
+  }
+
+  private createRefreshExpiry(ttl: string): Date {
+    const match = /^(\d+)([mhdw])$/.exec(ttl);
+    const expiresAt = new Date();
+
+    if (!match) {
+      expiresAt.setDate(expiresAt.getDate() + 7);
+      return expiresAt;
+    }
+
+    const value = parseInt(match[1], 10);
+    const unit = match[2];
+
+    switch (unit) {
+      case 'm':
+        expiresAt.setMinutes(expiresAt.getMinutes() + value);
+        break;
+      case 'h':
+        expiresAt.setHours(expiresAt.getHours() + value);
+        break;
+      case 'd':
+        expiresAt.setDate(expiresAt.getDate() + value);
+        break;
+      case 'w':
+        expiresAt.setDate(expiresAt.getDate() + value * 7);
+        break;
+      default:
+        expiresAt.setDate(expiresAt.getDate() + 7);
+        break;
+    }
+
+    return expiresAt;
   }
 }
