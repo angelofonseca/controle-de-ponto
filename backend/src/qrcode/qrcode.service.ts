@@ -55,7 +55,6 @@ export class QrcodeService {
     const session = await this.prisma.qrCodeSession.findFirst({
       where: {
         companyId: requestingUser.companyId,
-        used: false,
         expiresAt: { gt: new Date() },
       },
       orderBy: { createdAt: 'desc' },
@@ -105,7 +104,7 @@ export class QrcodeService {
     }
 
     return {
-      valid: !session.used && session.expiresAt > new Date(),
+      valid: session.expiresAt > new Date(),
       session: {
         id: session.id,
         allowedType: session.allowedType,

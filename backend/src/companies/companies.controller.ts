@@ -1,10 +1,8 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
-  Param,
   Delete,
   HttpCode,
   HttpStatus,
@@ -12,15 +10,13 @@ import {
 import {
   ApiTags,
   ApiOperation,
-  ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { Role } from '../generated/prisma/enums';
 import { CompaniesService } from './companies.service';
-import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Roles } from '../common/decorators/roles.decorator';
-import { Public } from '../common/decorators/public.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @ApiTags('companies')
 @ApiBearerAuth('JWT-auth')
@@ -28,42 +24,25 @@ import { Public } from '../common/decorators/public.decorator';
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
-  @Public()
-  @Post()
-  @ApiOperation({ summary: 'Cadastrar nova empresa' })
-  @ApiResponse({ status: 201, description: 'Empresa criada com sucesso' })
-  async create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companiesService.create(createCompanyDto);
-  }
-
-  @Get()
+  @Get('me')
   @Roles(Role.COMPANY_ADMIN)
-  @ApiOperation({ summary: 'Listar todas as empresas' })
-  async findAll() {
-    return this.companiesService.findAll();
+  @ApiOperation({ summary: 'Buscar empresa do usuário autenticado' })
+  async findMyCompany(@CurrentUser() user: any) {
+    return this.companiesService.findOne(user.companyId);
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Buscar empresa por ID' })
-  async findOne(@Param('id') id: string) {
-    return this.companiesService.findOne(id);
-  }
-
-  @Patch(':id')
+  @Patch('me')
   @Roles(Role.COMPANY_ADMIN)
-  @ApiOperation({ summary: 'Atualizar empresa' })
-  async update(
-    @Param('id') id: string,
-    @Body() updateCompanyDto: UpdateCompanyDto,
-  ) {
-    return this.companiesService.update(id, updateCompanyDto);
+  @ApiOperation({ summary: 'Atualizar empresa do usuário autenticado' })
+  async update(@CurrentUser() user: any, @Body() updateCompanyDto: UpdateCompanyDto) {
+    return this.companiesService.update(user.companyId, updateCompanyDto);
   }
 
-  @Delete(':id')
+  @Delete('me')
   @Roles(Role.COMPANY_ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Desativar empresa' })
-  async remove(@Param('id') id: string) {
-    return this.companiesService.remove(id);
+  @ApiOperation({ summary: 'Desativar empresa do usuário autenticado' })
+  async remove(@CurrentUser() user: any) {
+    return this.companiesService.remove(user.companyId);
   }
 }

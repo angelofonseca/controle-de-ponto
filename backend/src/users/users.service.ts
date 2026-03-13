@@ -14,7 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto, requestingUser: any) {
     const existing = await this.prisma.user.findUnique({
       where: { email: createUserDto.email },
     });
@@ -24,11 +24,16 @@ export class UsersService {
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const requestedRole = createUserDto.role ?? Role.EMPLOYEE;
+    const role = requestedRole === Role.COMPANY_ADMIN ? Role.EMPLOYEE : requestedRole;
 
     const user = await this.prisma.user.create({
       data: {
-        ...createUserDto,
+        email: createUserDto.email,
+        name: createUserDto.name,
         password: hashedPassword,
+        role,
+        companyId: requestingUser.companyId,
       },
       select: {
         id: true,

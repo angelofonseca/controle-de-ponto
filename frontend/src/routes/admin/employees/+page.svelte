@@ -41,13 +41,11 @@
     formLoading = true;
     try {
       // First create user
-      const me = await api.getMe();
       const user = await api.createUser({
         name: formName,
         email: formEmail,
         password: formPassword,
         role: 'EMPLOYEE',
-        companyId: me.companyId,
       });
 
       // Then create employee profile

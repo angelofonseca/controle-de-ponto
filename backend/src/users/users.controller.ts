@@ -13,20 +13,19 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from '../common/decorators/roles.decorator';
-import { Public } from '../common/decorators/public.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth('JWT-auth')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
-  @Public()
   @Post()
-  @ApiOperation({ summary: 'Criar usuário administrador da empresa' })
-  async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @Roles(Role.COMPANY_ADMIN)
+  @ApiOperation({ summary: 'Criar usuário da empresa autenticada' })
+  async create(@Body() createUserDto: CreateUserDto, @CurrentUser() user: any) {
+    return this.usersService.create(createUserDto, user);
   }
 
   @Get('me')

@@ -72,6 +72,19 @@ class ApiClient {
     return this.request<AuthResponse>('POST', '/auth/login', { email, password }, false);
   }
 
+  async registerCompanyAdmin(data: {
+    companyName: string;
+    companyCnpj?: string;
+    companyEmail: string;
+    companyPhone?: string;
+    companyAddress?: string;
+    adminName: string;
+    adminEmail: string;
+    adminPassword: string;
+  }): Promise<AuthResponse> {
+    return this.request<AuthResponse>('POST', '/auth/register-company-admin', data, false);
+  }
+
   async refresh(refreshToken: string): Promise<AuthResponse> {
     return this.request<AuthResponse>('POST', '/auth/refresh', { refreshToken }, false);
   }
@@ -90,9 +103,8 @@ class ApiClient {
     password: string;
     name: string;
     role?: string;
-    companyId: string;
   }): Promise<User> {
-    return this.request<User>('POST', '/users', data, false);
+    return this.request<User>('POST', '/users', data);
   }
 
   async updateUser(id: string, data: Partial<User>): Promise<User> {
@@ -100,16 +112,12 @@ class ApiClient {
   }
 
   // Companies
-  async createCompany(data: Partial<Company>): Promise<Company> {
-    return this.request<Company>('POST', '/companies', data, false);
+  async getCompany(): Promise<Company> {
+    return this.request<Company>('GET', '/companies/me');
   }
 
-  async getCompany(id: string): Promise<Company> {
-    return this.request<Company>('GET', `/companies/${id}`);
-  }
-
-  async updateCompany(id: string, data: Partial<Company>): Promise<Company> {
-    return this.request<Company>('PATCH', `/companies/${id}`, data);
+  async updateCompany(data: Partial<Company>): Promise<Company> {
+    return this.request<Company>('PATCH', '/companies/me', data);
   }
 
   // Employees

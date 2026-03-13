@@ -51,10 +51,6 @@ export class TimeRecordsService {
       throw new NotFoundException('QR code não encontrado');
     }
 
-    if (session.used) {
-      throw new BadRequestException('QR code já utilizado');
-    }
-
     if (session.expiresAt < new Date()) {
       throw new BadRequestException('QR code expirado');
     }
@@ -67,23 +63,17 @@ export class TimeRecordsService {
 
     const now = new Date();
 
-    const [record] = await this.prisma.$transaction([
-      this.prisma.timeRecord.create({
-        data: {
-          type: session.allowedType,
-          method: RecordMethod.QR_CODE,
-          recordedAt: now,
-          notes: dto.notes,
-          userId: requestingUser.sub,
-          qrCodeSessionId: session.id,
-        },
-        include: { user: { select: { id: true, name: true } } },
-      }),
-      this.prisma.qrCodeSession.update({
-        where: { id: session.id },
-        data: { used: true, usedAt: now },
-      }),
-    ]);
+    const record = await this.prisma.timeRecord.create({
+      data: {
+        type: session.allowedType,
+        method: RecordMethod.QR_CODE,
+        recordedAt: now,
+        notes: dto.notes,
+        userId: requestingUser.sub,
+        qrCodeSessionId: session.id,
+      },
+      include: { user: { select: { id: true, name: true } } },
+    });
 
     await this.updateAttendanceDay(requestingUser.sub, now);
 

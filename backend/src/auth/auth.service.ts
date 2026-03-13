@@ -1,10 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import { Role } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { RegisterCompanyAdminDto } from './dto/register-company-admin.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -13,7 +19,76 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
+
+  async registerCompanyAdmin(dto: RegisterCompanyAdminDto) {
+    const [existingCompanyEmail, existingUserEmail] = await Promise.all([
+      this.prisma.company.findUnique({ where: { email: dto.companyEmail } }),
+      this.prisma.user.findUnique({ where: { email: dto.adminEmail } }),
+    ]);
+
+    if (existingCompanyEmail) {
+      throw new ConflictException('E-mail da empresa ja cadastrado');
+    }
+
+    if (existingUserEmail) {
+      throw new ConflictException('E-mail do administrador ja cadastrado');
+    }
+
+    if (dto.companyCnpj) {
+      const existingCompanyCnpj = await this.prisma.company.findUnique({
+        where: { cnpj: dto.companyCnpj },
+      });
+
+      if (existingCompanyCnpj) {
+        throw new ConflictException('CNPJ ja cadastrado');
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.adminPassword, 10);
+
+    const created = await this.prisma.$transaction(async (tx) => {
+      const company = await tx.company.create({
+        data: {
+          name: dto.companyName,
+          cnpj: dto.companyCnpj,
+          email: dto.companyEmail,
+          phone: dto.companyPhone,
+          address: dto.companyAddress,
+        },
+      });
+
+      const user = await tx.user.create({
+        data: {
+          name: dto.adminName,
+          email: dto.adminEmail,
+          password: hashedPassword,
+          role: Role.COMPANY_ADMIN,
+          companyId: company.id,
+        },
+        include: { company: true },
+      });
+
+      return { company, user };
+    });
+
+    const tokens = await this.generateTokens(created.user);
+
+    return {
+      user: {
+        id: created.user.id,
+        email: created.user.email,
+        name: created.user.name,
+        role: created.user.role,
+        companyId: created.user.companyId,
+        company: {
+          id: created.company.id,
+          name: created.company.name,
+        },
+      },
+      ...tokens,
+    };
+  }
 
   async login(loginDto: LoginDto) {
     const user = await this.prisma.user.findUnique({

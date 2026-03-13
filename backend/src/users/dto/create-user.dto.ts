@@ -5,7 +5,6 @@ import {
   MinLength,
   IsNotEmpty,
   IsEnum,
-  IsUUID,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Role } from '../../generated/prisma/enums';
@@ -29,8 +28,4 @@ export class CreateUserDto {
   @IsOptional()
   @IsEnum(Role)
   role?: Role;
-
-  @ApiProperty({ example: 'uuid-da-empresa' })
-  @IsUUID()
-  companyId: string;
 }

@@ -21,30 +21,9 @@
   let adminPassword = '';
   let adminPasswordConfirm = '';
 
-  let createdCompanyId = '';
-
   async function handleCompanyStep() {
     error = '';
-    loading = true;
-
-    try {
-      const company = await api.createCompany({
-        name: companyName,
-        cnpj: companyCnpj || undefined,
-        email: companyEmail,
-        phone: companyPhone || undefined,
-        address: companyAddress || undefined,
-      });
-
-      createdCompanyId = company.id;
-      step = 2;
-      toast.success('Empresa cadastrada! Agora crie o administrador.');
-    } catch (err: any) {
-      error = Array.isArray(err.message) ? err.message.join(', ') : err.message || 'Erro ao cadastrar empresa';
-      toast.error(error);
-    } finally {
-      loading = false;
-    }
+    step = 2;
   }
 
   async function handleAdminStep() {
@@ -63,16 +42,17 @@
     loading = true;
 
     try {
-      await api.createUser({
-        name: adminName,
-        email: adminEmail,
-        password: adminPassword,
-        role: 'COMPANY_ADMIN',
-        companyId: createdCompanyId,
+      const response = await api.registerCompanyAdmin({
+        companyName,
+        companyCnpj: companyCnpj || undefined,
+        companyEmail,
+        companyPhone: companyPhone || undefined,
+        companyAddress: companyAddress || undefined,
+        adminName,
+        adminEmail,
+        adminPassword,
       });
 
-      // Auto login
-      const response = await api.login(adminEmail, adminPassword);
       authStore.setAuth(response.user, response.accessToken, response.refreshToken);
       toast.success('Conta criada com sucesso! Bem-vindo!');
       goto('/admin/dashboard');

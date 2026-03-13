@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { SkipThrottle } from '@nestjs/throttler';
 import { PrismaService } from '../prisma/prisma.service';
 import { Public } from '../common/decorators/public.decorator';
 
@@ -9,6 +10,7 @@ export class HealthController {
   constructor(private readonly prisma: PrismaService) { }
 
   @Public()
+  @SkipThrottle()
   @Get()
   @ApiOperation({ summary: 'Health check' })
   async check() {
@@ -20,11 +22,11 @@ export class HealthController {
         database: 'connected',
       };
     } catch {
-      return {
+      throw new ServiceUnavailableException({
         status: 'error',
         timestamp: new Date().toISOString(),
         database: 'disconnected',
-      };
+      });
     }
   }
 }
