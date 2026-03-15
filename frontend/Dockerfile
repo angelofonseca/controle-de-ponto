@@ -6,6 +6,7 @@ FROM node:20-alpine AS base
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
+RUN npm install -g npm@11.11.1
 
 ARG PUBLIC_API_URL=http://localhost:3000
 ENV PUBLIC_API_URL=$PUBLIC_API_URL
@@ -48,6 +49,7 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 RUN apk add --no-cache curl
+RUN npm install -g npm@11.11.1
 
 ARG PUBLIC_API_URL=http://localhost:3000
 ENV PUBLIC_API_URL=$PUBLIC_API_URL
