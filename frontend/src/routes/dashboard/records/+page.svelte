@@ -69,8 +69,9 @@
   </div>
 
   <div class="card p-4">
-    <label class="block text-sm font-medium text-gray-700 mb-2">Observação (opcional)</label>
+    <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Observação (opcional)</label>
     <textarea
+      id="notes"
       bind:value={notes}
       rows="3"
       placeholder="Adicione uma observação ao registro..."

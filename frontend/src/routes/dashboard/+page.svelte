@@ -5,11 +5,14 @@
   import { formatTime, getTimeRecordLabel, formatDate } from '$lib/utils';
   import { toast } from 'svelte-sonner';
   import type { TimeRecord, AttendanceDay, TimeRecordType } from '$lib/types';
+  import FaceCapture from '$lib/components/FaceCapture.svelte';
 
   let todayRecords: TimeRecord[] = [];
   let todayAttendance: AttendanceDay | null = null;
   let loading = true;
   let clockingIn = false;
+  let faceLoading = false;
+  let facePreview: string | null = null;
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -58,6 +61,44 @@
     } finally {
       clockingIn = false;
     }
+  }
+
+  function methodLabel(method: string) {
+    if (method === 'QR_CODE') return 'QR Code';
+    if (method === 'FACIAL') return 'Facial';
+    return 'Manual';
+  }
+
+  function onFaceCaptured(event: CustomEvent<string>) {
+    facePreview = event.detail;
+  }
+
+  async function registerFacialPoint() {
+    if (!nextType || !facePreview) {
+      toast.error('Selecione uma foto para validar o ponto.');
+      return;
+    }
+    faceLoading = true;
+    try {
+      const result = await api.createFacialRecord({ type: nextType, image: facePreview });
+      if ('record' in result) {
+        toast.success(`${getTimeRecordLabel(nextType)} registrado por face!`);
+        await loadData();
+      } else {
+        const message = result.message ?? 'Validação facial requer revisão';
+        toast.error(message);
+      }
+    } catch (err: any) {
+      const msg = Array.isArray(err.message) ? err.message.join(', ') : err.message;
+      toast.error(msg || 'Erro ao registrar ponto facial');
+    } finally {
+      faceLoading = false;
+    }
+  }
+
+  function onFaceError(event: CustomEvent<string>) {
+    const message = event.detail || 'Erro ao acessar a câmera';
+    toast.error(message);
   }
 
   function getStatusColor(status: string) {
@@ -153,13 +194,40 @@
                 </div>
                 <div>
                   <p class="text-sm font-medium text-gray-900">{getTimeRecordLabel(record.type)}</p>
-                  <p class="text-xs text-gray-400">{record.method === 'QR_CODE' ? 'QR Code' : 'Manual'}</p>
+                  <p class="text-xs text-gray-400">{methodLabel(record.method)}</p>
                 </div>
               </div>
               <span class="text-sm font-medium text-gray-700">{formatTime(record.recordedAt)}</span>
             </div>
           {/each}
         </div>
+      </div>
+    {/if}
+
+    <!-- Registro facial -->
+    {#if !dayCompleted}
+      <div class="card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900">Registrar com rosto (InsightFace)</h2>
+            <p class="text-sm text-gray-500">Permita a câmera ou envie uma foto atual para validar o ponto.</p>
+          </div>
+          <span class="badge badge-info">Beta</span>
+        </div>
+
+        <FaceCapture on:capture={onFaceCaptured} on:error={onFaceError} />
+
+        <button
+          on:click={registerFacialPoint}
+          class="btn-primary w-full mt-4"
+          disabled={!facePreview || faceLoading}
+        >
+          {#if faceLoading}
+            Validando rosto...
+          {:else}
+            Validar e registrar {nextType ? getTimeRecordLabel(nextType) : ''}
+          {/if}
+        </button>
       </div>
     {/if}
 
@@ -177,6 +245,13 @@
         <div>
           <p class="font-medium text-gray-900 text-sm">QR Code</p>
           <p class="text-xs text-gray-500">Ler QR code</p>
+        </div>
+      </a>
+      <a href="/dashboard/profile" class="card p-4 flex items-center space-x-3 hover:border-primary-200 transition-colors">
+        <span class="text-2xl">👤</span>
+        <div>
+          <p class="font-medium text-gray-900 text-sm">Perfil</p>
+          <p class="text-xs text-gray-500">Dados e foto</p>
         </div>
       </a>
     </div>

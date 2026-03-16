@@ -219,6 +219,8 @@ export type UserWhereInput = {
   employeeProfile?: Prisma.XOR<Prisma.EmployeeProfileNullableScalarRelationFilter, Prisma.EmployeeProfileWhereInput> | null
   timeRecords?: Prisma.TimeRecordListRelationFilter
   attendanceDays?: Prisma.AttendanceDayListRelationFilter
+  faceTemplates?: Prisma.FaceTemplateListRelationFilter
+  faceValidationEvents?: Prisma.FaceValidationEventListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -236,6 +238,8 @@ export type UserOrderByWithRelationInput = {
   employeeProfile?: Prisma.EmployeeProfileOrderByWithRelationInput
   timeRecords?: Prisma.TimeRecordOrderByRelationAggregateInput
   attendanceDays?: Prisma.AttendanceDayOrderByRelationAggregateInput
+  faceTemplates?: Prisma.FaceTemplateOrderByRelationAggregateInput
+  faceValidationEvents?: Prisma.FaceValidationEventOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +260,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   employeeProfile?: Prisma.XOR<Prisma.EmployeeProfileNullableScalarRelationFilter, Prisma.EmployeeProfileWhereInput> | null
   timeRecords?: Prisma.TimeRecordListRelationFilter
   attendanceDays?: Prisma.AttendanceDayListRelationFilter
+  faceTemplates?: Prisma.FaceTemplateListRelationFilter
+  faceValidationEvents?: Prisma.FaceValidationEventListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -302,6 +308,8 @@ export type UserCreateInput = {
   employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -318,6 +326,8 @@ export type UserUncheckedCreateInput = {
   employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -334,6 +344,8 @@ export type UserUpdateInput = {
   employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -350,6 +362,8 @@ export type UserUncheckedUpdateInput = {
   employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -526,6 +540,34 @@ export type UserUpdateOneRequiredWithoutTimeRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTimeRecordsInput, Prisma.UserUpdateWithoutTimeRecordsInput>, Prisma.UserUncheckedUpdateWithoutTimeRecordsInput>
 }
 
+export type UserCreateNestedOneWithoutFaceTemplatesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFaceTemplatesInput, Prisma.UserUncheckedCreateWithoutFaceTemplatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFaceTemplatesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFaceTemplatesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFaceTemplatesInput, Prisma.UserUncheckedCreateWithoutFaceTemplatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFaceTemplatesInput
+  upsert?: Prisma.UserUpsertWithoutFaceTemplatesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFaceTemplatesInput, Prisma.UserUpdateWithoutFaceTemplatesInput>, Prisma.UserUncheckedUpdateWithoutFaceTemplatesInput>
+}
+
+export type UserCreateNestedOneWithoutFaceValidationEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFaceValidationEventsInput, Prisma.UserUncheckedCreateWithoutFaceValidationEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFaceValidationEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFaceValidationEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFaceValidationEventsInput, Prisma.UserUncheckedCreateWithoutFaceValidationEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFaceValidationEventsInput
+  upsert?: Prisma.UserUpsertWithoutFaceValidationEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFaceValidationEventsInput, Prisma.UserUpdateWithoutFaceValidationEventsInput>, Prisma.UserUncheckedUpdateWithoutFaceValidationEventsInput>
+}
+
 export type UserCreateNestedOneWithoutAttendanceDaysInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAttendanceDaysInput, Prisma.UserUncheckedCreateWithoutAttendanceDaysInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendanceDaysInput
@@ -553,6 +595,8 @@ export type UserCreateWithoutCompanyInput = {
   employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCompanyInput = {
@@ -568,6 +612,8 @@ export type UserUncheckedCreateWithoutCompanyInput = {
   employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCompanyInput = {
@@ -624,6 +670,8 @@ export type UserCreateWithoutRefreshTokensInput = {
   employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -639,6 +687,8 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -670,6 +720,8 @@ export type UserUpdateWithoutRefreshTokensInput = {
   employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -685,6 +737,8 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEmployeeProfileInput = {
@@ -700,6 +754,8 @@ export type UserCreateWithoutEmployeeProfileInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEmployeeProfileInput = {
@@ -715,6 +771,8 @@ export type UserUncheckedCreateWithoutEmployeeProfileInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEmployeeProfileInput = {
@@ -746,6 +804,8 @@ export type UserUpdateWithoutEmployeeProfileInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmployeeProfileInput = {
@@ -761,6 +821,8 @@ export type UserUncheckedUpdateWithoutEmployeeProfileInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTimeRecordsInput = {
@@ -776,6 +838,8 @@ export type UserCreateWithoutTimeRecordsInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTimeRecordsInput = {
@@ -791,6 +855,8 @@ export type UserUncheckedCreateWithoutTimeRecordsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
   attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTimeRecordsInput = {
@@ -822,6 +888,8 @@ export type UserUpdateWithoutTimeRecordsInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimeRecordsInput = {
@@ -837,6 +905,176 @@ export type UserUncheckedUpdateWithoutTimeRecordsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFaceTemplatesInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  role?: $Enums.Role
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
+  timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
+  attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFaceTemplatesInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  role?: $Enums.Role
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  companyId: string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
+  timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
+  attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFaceTemplatesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFaceTemplatesInput, Prisma.UserUncheckedCreateWithoutFaceTemplatesInput>
+}
+
+export type UserUpsertWithoutFaceTemplatesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFaceTemplatesInput, Prisma.UserUncheckedUpdateWithoutFaceTemplatesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFaceTemplatesInput, Prisma.UserUncheckedCreateWithoutFaceTemplatesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFaceTemplatesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFaceTemplatesInput, Prisma.UserUncheckedUpdateWithoutFaceTemplatesInput>
+}
+
+export type UserUpdateWithoutFaceTemplatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
+  timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
+  attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFaceTemplatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
+  timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
+  attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFaceValidationEventsInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  role?: $Enums.Role
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
+  timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
+  attendanceDays?: Prisma.AttendanceDayCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFaceValidationEventsInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  role?: $Enums.Role
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  companyId: string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
+  timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
+  attendanceDays?: Prisma.AttendanceDayUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFaceValidationEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFaceValidationEventsInput, Prisma.UserUncheckedCreateWithoutFaceValidationEventsInput>
+}
+
+export type UserUpsertWithoutFaceValidationEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFaceValidationEventsInput, Prisma.UserUncheckedUpdateWithoutFaceValidationEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFaceValidationEventsInput, Prisma.UserUncheckedCreateWithoutFaceValidationEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFaceValidationEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFaceValidationEventsInput, Prisma.UserUncheckedUpdateWithoutFaceValidationEventsInput>
+}
+
+export type UserUpdateWithoutFaceValidationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
+  timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
+  attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFaceValidationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
+  timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
+  attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAttendanceDaysInput = {
@@ -852,6 +1090,8 @@ export type UserCreateWithoutAttendanceDaysInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   employeeProfile?: Prisma.EmployeeProfileCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAttendanceDaysInput = {
@@ -867,6 +1107,8 @@ export type UserUncheckedCreateWithoutAttendanceDaysInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   employeeProfile?: Prisma.EmployeeProfileUncheckedCreateNestedOneWithoutUserInput
   timeRecords?: Prisma.TimeRecordUncheckedCreateNestedManyWithoutUserInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutUserInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAttendanceDaysInput = {
@@ -898,6 +1140,8 @@ export type UserUpdateWithoutAttendanceDaysInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttendanceDaysInput = {
@@ -913,6 +1157,8 @@ export type UserUncheckedUpdateWithoutAttendanceDaysInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyCompanyInput = {
@@ -939,6 +1185,8 @@ export type UserUpdateWithoutCompanyInput = {
   employeeProfile?: Prisma.EmployeeProfileUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCompanyInput = {
@@ -954,6 +1202,8 @@ export type UserUncheckedUpdateWithoutCompanyInput = {
   employeeProfile?: Prisma.EmployeeProfileUncheckedUpdateOneWithoutUserNestedInput
   timeRecords?: Prisma.TimeRecordUncheckedUpdateManyWithoutUserNestedInput
   attendanceDays?: Prisma.AttendanceDayUncheckedUpdateManyWithoutUserNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutUserNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutCompanyInput = {
@@ -976,12 +1226,16 @@ export type UserCountOutputType = {
   refreshTokens: number
   timeRecords: number
   attendanceDays: number
+  faceTemplates: number
+  faceValidationEvents: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
   timeRecords?: boolean | UserCountOutputTypeCountTimeRecordsArgs
   attendanceDays?: boolean | UserCountOutputTypeCountAttendanceDaysArgs
+  faceTemplates?: boolean | UserCountOutputTypeCountFaceTemplatesArgs
+  faceValidationEvents?: boolean | UserCountOutputTypeCountFaceValidationEventsArgs
 }
 
 /**
@@ -1015,6 +1269,20 @@ export type UserCountOutputTypeCountAttendanceDaysArgs<ExtArgs extends runtime.T
   where?: Prisma.AttendanceDayWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFaceTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FaceTemplateWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFaceValidationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FaceValidationEventWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1031,6 +1299,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   employeeProfile?: boolean | Prisma.User$employeeProfileArgs<ExtArgs>
   timeRecords?: boolean | Prisma.User$timeRecordsArgs<ExtArgs>
   attendanceDays?: boolean | Prisma.User$attendanceDaysArgs<ExtArgs>
+  faceTemplates?: boolean | Prisma.User$faceTemplatesArgs<ExtArgs>
+  faceValidationEvents?: boolean | Prisma.User$faceValidationEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1079,6 +1349,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   employeeProfile?: boolean | Prisma.User$employeeProfileArgs<ExtArgs>
   timeRecords?: boolean | Prisma.User$timeRecordsArgs<ExtArgs>
   attendanceDays?: boolean | Prisma.User$attendanceDaysArgs<ExtArgs>
+  faceTemplates?: boolean | Prisma.User$faceTemplatesArgs<ExtArgs>
+  faceValidationEvents?: boolean | Prisma.User$faceValidationEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1096,6 +1368,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     employeeProfile: Prisma.$EmployeeProfilePayload<ExtArgs> | null
     timeRecords: Prisma.$TimeRecordPayload<ExtArgs>[]
     attendanceDays: Prisma.$AttendanceDayPayload<ExtArgs>[]
+    faceTemplates: Prisma.$FaceTemplatePayload<ExtArgs>[]
+    faceValidationEvents: Prisma.$FaceValidationEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1506,6 +1780,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   employeeProfile<T extends Prisma.User$employeeProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeeProfileArgs<ExtArgs>>): Prisma.Prisma__EmployeeProfileClient<runtime.Types.Result.GetResult<Prisma.$EmployeeProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   timeRecords<T extends Prisma.User$timeRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timeRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimeRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attendanceDays<T extends Prisma.User$attendanceDaysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attendanceDaysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendanceDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  faceTemplates<T extends Prisma.User$faceTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$faceTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  faceValidationEvents<T extends Prisma.User$faceValidationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$faceValidationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceValidationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2033,6 +2309,54 @@ export type User$attendanceDaysArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.AttendanceDayScalarFieldEnum | Prisma.AttendanceDayScalarFieldEnum[]
+}
+
+/**
+ * User.faceTemplates
+ */
+export type User$faceTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FaceTemplate
+   */
+  select?: Prisma.FaceTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FaceTemplate
+   */
+  omit?: Prisma.FaceTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FaceTemplateInclude<ExtArgs> | null
+  where?: Prisma.FaceTemplateWhereInput
+  orderBy?: Prisma.FaceTemplateOrderByWithRelationInput | Prisma.FaceTemplateOrderByWithRelationInput[]
+  cursor?: Prisma.FaceTemplateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FaceTemplateScalarFieldEnum | Prisma.FaceTemplateScalarFieldEnum[]
+}
+
+/**
+ * User.faceValidationEvents
+ */
+export type User$faceValidationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FaceValidationEvent
+   */
+  select?: Prisma.FaceValidationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FaceValidationEvent
+   */
+  omit?: Prisma.FaceValidationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FaceValidationEventInclude<ExtArgs> | null
+  where?: Prisma.FaceValidationEventWhereInput
+  orderBy?: Prisma.FaceValidationEventOrderByWithRelationInput | Prisma.FaceValidationEventOrderByWithRelationInput[]
+  cursor?: Prisma.FaceValidationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FaceValidationEventScalarFieldEnum | Prisma.FaceValidationEventScalarFieldEnum[]
 }
 
 /**

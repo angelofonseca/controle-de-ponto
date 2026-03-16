@@ -2,7 +2,7 @@ export type Role = 'COMPANY_ADMIN' | 'EMPLOYEE';
 
 export type TimeRecordType = 'CLOCK_IN' | 'BREAK_START' | 'BREAK_END' | 'CLOCK_OUT';
 
-export type RecordMethod = 'MANUAL' | 'QR_CODE';
+export type RecordMethod = 'MANUAL' | 'QR_CODE' | 'FACIAL';
 
 export type AttendanceStatus =
   | 'ON_TIME'

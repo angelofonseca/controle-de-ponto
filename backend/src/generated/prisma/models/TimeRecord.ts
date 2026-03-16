@@ -208,6 +208,7 @@ export type TimeRecordWhereInput = {
   qrCodeSessionId?: Prisma.StringNullableFilter<"TimeRecord"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   qrCodeSession?: Prisma.XOR<Prisma.QrCodeSessionNullableScalarRelationFilter, Prisma.QrCodeSessionWhereInput> | null
+  faceValidationEvents?: Prisma.FaceValidationEventListRelationFilter
 }
 
 export type TimeRecordOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type TimeRecordOrderByWithRelationInput = {
   qrCodeSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   qrCodeSession?: Prisma.QrCodeSessionOrderByWithRelationInput
+  faceValidationEvents?: Prisma.FaceValidationEventOrderByRelationAggregateInput
 }
 
 export type TimeRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +239,7 @@ export type TimeRecordWhereUniqueInput = Prisma.AtLeast<{
   qrCodeSessionId?: Prisma.StringNullableFilter<"TimeRecord"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   qrCodeSession?: Prisma.XOR<Prisma.QrCodeSessionNullableScalarRelationFilter, Prisma.QrCodeSessionWhereInput> | null
+  faceValidationEvents?: Prisma.FaceValidationEventListRelationFilter
 }, "id">
 
 export type TimeRecordOrderByWithAggregationInput = {
@@ -276,6 +279,7 @@ export type TimeRecordCreateInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTimeRecordsInput
   qrCodeSession?: Prisma.QrCodeSessionCreateNestedOneWithoutTimeRecordsInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutTimeRecordInput
 }
 
 export type TimeRecordUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type TimeRecordUncheckedCreateInput = {
   createdAt?: Date | string
   userId: string
   qrCodeSessionId?: string | null
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutTimeRecordInput
 }
 
 export type TimeRecordUpdateInput = {
@@ -298,6 +303,7 @@ export type TimeRecordUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTimeRecordsNestedInput
   qrCodeSession?: Prisma.QrCodeSessionUpdateOneWithoutTimeRecordsNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutTimeRecordNestedInput
 }
 
 export type TimeRecordUncheckedUpdateInput = {
@@ -309,6 +315,7 @@ export type TimeRecordUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   qrCodeSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutTimeRecordNestedInput
 }
 
 export type TimeRecordCreateManyInput = {
@@ -385,6 +392,11 @@ export type TimeRecordMinOrderByAggregateInput = {
   qrCodeSessionId?: Prisma.SortOrder
 }
 
+export type TimeRecordNullableScalarRelationFilter = {
+  is?: Prisma.TimeRecordWhereInput | null
+  isNot?: Prisma.TimeRecordWhereInput | null
+}
+
 export type TimeRecordCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.TimeRecordCreateWithoutUserInput, Prisma.TimeRecordUncheckedCreateWithoutUserInput> | Prisma.TimeRecordCreateWithoutUserInput[] | Prisma.TimeRecordUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.TimeRecordCreateOrConnectWithoutUserInput | Prisma.TimeRecordCreateOrConnectWithoutUserInput[]
@@ -433,6 +445,22 @@ export type EnumTimeRecordTypeFieldUpdateOperationsInput = {
 
 export type EnumRecordMethodFieldUpdateOperationsInput = {
   set?: $Enums.RecordMethod
+}
+
+export type TimeRecordCreateNestedOneWithoutFaceValidationEventsInput = {
+  create?: Prisma.XOR<Prisma.TimeRecordCreateWithoutFaceValidationEventsInput, Prisma.TimeRecordUncheckedCreateWithoutFaceValidationEventsInput>
+  connectOrCreate?: Prisma.TimeRecordCreateOrConnectWithoutFaceValidationEventsInput
+  connect?: Prisma.TimeRecordWhereUniqueInput
+}
+
+export type TimeRecordUpdateOneWithoutFaceValidationEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.TimeRecordCreateWithoutFaceValidationEventsInput, Prisma.TimeRecordUncheckedCreateWithoutFaceValidationEventsInput>
+  connectOrCreate?: Prisma.TimeRecordCreateOrConnectWithoutFaceValidationEventsInput
+  upsert?: Prisma.TimeRecordUpsertWithoutFaceValidationEventsInput
+  disconnect?: Prisma.TimeRecordWhereInput | boolean
+  delete?: Prisma.TimeRecordWhereInput | boolean
+  connect?: Prisma.TimeRecordWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TimeRecordUpdateToOneWithWhereWithoutFaceValidationEventsInput, Prisma.TimeRecordUpdateWithoutFaceValidationEventsInput>, Prisma.TimeRecordUncheckedUpdateWithoutFaceValidationEventsInput>
 }
 
 export type TimeRecordCreateNestedManyWithoutQrCodeSessionInput = {
@@ -485,6 +513,7 @@ export type TimeRecordCreateWithoutUserInput = {
   notes?: string | null
   createdAt?: Date | string
   qrCodeSession?: Prisma.QrCodeSessionCreateNestedOneWithoutTimeRecordsInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutTimeRecordInput
 }
 
 export type TimeRecordUncheckedCreateWithoutUserInput = {
@@ -495,6 +524,7 @@ export type TimeRecordUncheckedCreateWithoutUserInput = {
   notes?: string | null
   createdAt?: Date | string
   qrCodeSessionId?: string | null
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutTimeRecordInput
 }
 
 export type TimeRecordCreateOrConnectWithoutUserInput = {
@@ -537,6 +567,66 @@ export type TimeRecordScalarWhereInput = {
   qrCodeSessionId?: Prisma.StringNullableFilter<"TimeRecord"> | string | null
 }
 
+export type TimeRecordCreateWithoutFaceValidationEventsInput = {
+  id?: string
+  type: $Enums.TimeRecordType
+  method?: $Enums.RecordMethod
+  recordedAt: Date | string
+  notes?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutTimeRecordsInput
+  qrCodeSession?: Prisma.QrCodeSessionCreateNestedOneWithoutTimeRecordsInput
+}
+
+export type TimeRecordUncheckedCreateWithoutFaceValidationEventsInput = {
+  id?: string
+  type: $Enums.TimeRecordType
+  method?: $Enums.RecordMethod
+  recordedAt: Date | string
+  notes?: string | null
+  createdAt?: Date | string
+  userId: string
+  qrCodeSessionId?: string | null
+}
+
+export type TimeRecordCreateOrConnectWithoutFaceValidationEventsInput = {
+  where: Prisma.TimeRecordWhereUniqueInput
+  create: Prisma.XOR<Prisma.TimeRecordCreateWithoutFaceValidationEventsInput, Prisma.TimeRecordUncheckedCreateWithoutFaceValidationEventsInput>
+}
+
+export type TimeRecordUpsertWithoutFaceValidationEventsInput = {
+  update: Prisma.XOR<Prisma.TimeRecordUpdateWithoutFaceValidationEventsInput, Prisma.TimeRecordUncheckedUpdateWithoutFaceValidationEventsInput>
+  create: Prisma.XOR<Prisma.TimeRecordCreateWithoutFaceValidationEventsInput, Prisma.TimeRecordUncheckedCreateWithoutFaceValidationEventsInput>
+  where?: Prisma.TimeRecordWhereInput
+}
+
+export type TimeRecordUpdateToOneWithWhereWithoutFaceValidationEventsInput = {
+  where?: Prisma.TimeRecordWhereInput
+  data: Prisma.XOR<Prisma.TimeRecordUpdateWithoutFaceValidationEventsInput, Prisma.TimeRecordUncheckedUpdateWithoutFaceValidationEventsInput>
+}
+
+export type TimeRecordUpdateWithoutFaceValidationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTimeRecordTypeFieldUpdateOperationsInput | $Enums.TimeRecordType
+  method?: Prisma.EnumRecordMethodFieldUpdateOperationsInput | $Enums.RecordMethod
+  recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutTimeRecordsNestedInput
+  qrCodeSession?: Prisma.QrCodeSessionUpdateOneWithoutTimeRecordsNestedInput
+}
+
+export type TimeRecordUncheckedUpdateWithoutFaceValidationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTimeRecordTypeFieldUpdateOperationsInput | $Enums.TimeRecordType
+  method?: Prisma.EnumRecordMethodFieldUpdateOperationsInput | $Enums.RecordMethod
+  recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
 export type TimeRecordCreateWithoutQrCodeSessionInput = {
   id?: string
   type: $Enums.TimeRecordType
@@ -545,6 +635,7 @@ export type TimeRecordCreateWithoutQrCodeSessionInput = {
   notes?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTimeRecordsInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutTimeRecordInput
 }
 
 export type TimeRecordUncheckedCreateWithoutQrCodeSessionInput = {
@@ -555,6 +646,7 @@ export type TimeRecordUncheckedCreateWithoutQrCodeSessionInput = {
   notes?: string | null
   createdAt?: Date | string
   userId: string
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutTimeRecordInput
 }
 
 export type TimeRecordCreateOrConnectWithoutQrCodeSessionInput = {
@@ -601,6 +693,7 @@ export type TimeRecordUpdateWithoutUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   qrCodeSession?: Prisma.QrCodeSessionUpdateOneWithoutTimeRecordsNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutTimeRecordNestedInput
 }
 
 export type TimeRecordUncheckedUpdateWithoutUserInput = {
@@ -611,6 +704,7 @@ export type TimeRecordUncheckedUpdateWithoutUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   qrCodeSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutTimeRecordNestedInput
 }
 
 export type TimeRecordUncheckedUpdateManyWithoutUserInput = {
@@ -641,6 +735,7 @@ export type TimeRecordUpdateWithoutQrCodeSessionInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTimeRecordsNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutTimeRecordNestedInput
 }
 
 export type TimeRecordUncheckedUpdateWithoutQrCodeSessionInput = {
@@ -651,6 +746,7 @@ export type TimeRecordUncheckedUpdateWithoutQrCodeSessionInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutTimeRecordNestedInput
 }
 
 export type TimeRecordUncheckedUpdateManyWithoutQrCodeSessionInput = {
@@ -664,6 +760,35 @@ export type TimeRecordUncheckedUpdateManyWithoutQrCodeSessionInput = {
 }
 
 
+/**
+ * Count Type TimeRecordCountOutputType
+ */
+
+export type TimeRecordCountOutputType = {
+  faceValidationEvents: number
+}
+
+export type TimeRecordCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  faceValidationEvents?: boolean | TimeRecordCountOutputTypeCountFaceValidationEventsArgs
+}
+
+/**
+ * TimeRecordCountOutputType without action
+ */
+export type TimeRecordCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TimeRecordCountOutputType
+   */
+  select?: Prisma.TimeRecordCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TimeRecordCountOutputType without action
+ */
+export type TimeRecordCountOutputTypeCountFaceValidationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FaceValidationEventWhereInput
+}
+
 
 export type TimeRecordSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -676,6 +801,8 @@ export type TimeRecordSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   qrCodeSessionId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   qrCodeSession?: boolean | Prisma.TimeRecord$qrCodeSessionArgs<ExtArgs>
+  faceValidationEvents?: boolean | Prisma.TimeRecord$faceValidationEventsArgs<ExtArgs>
+  _count?: boolean | Prisma.TimeRecordCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timeRecord"]>
 
 export type TimeRecordSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -719,6 +846,8 @@ export type TimeRecordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type TimeRecordInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   qrCodeSession?: boolean | Prisma.TimeRecord$qrCodeSessionArgs<ExtArgs>
+  faceValidationEvents?: boolean | Prisma.TimeRecord$faceValidationEventsArgs<ExtArgs>
+  _count?: boolean | Prisma.TimeRecordCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TimeRecordIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -734,6 +863,7 @@ export type $TimeRecordPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     qrCodeSession: Prisma.$QrCodeSessionPayload<ExtArgs> | null
+    faceValidationEvents: Prisma.$FaceValidationEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1140,6 +1270,7 @@ export interface Prisma__TimeRecordClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   qrCodeSession<T extends Prisma.TimeRecord$qrCodeSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRecord$qrCodeSessionArgs<ExtArgs>>): Prisma.Prisma__QrCodeSessionClient<runtime.Types.Result.GetResult<Prisma.$QrCodeSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  faceValidationEvents<T extends Prisma.TimeRecord$faceValidationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TimeRecord$faceValidationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceValidationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1594,6 +1725,30 @@ export type TimeRecord$qrCodeSessionArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.QrCodeSessionInclude<ExtArgs> | null
   where?: Prisma.QrCodeSessionWhereInput
+}
+
+/**
+ * TimeRecord.faceValidationEvents
+ */
+export type TimeRecord$faceValidationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FaceValidationEvent
+   */
+  select?: Prisma.FaceValidationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FaceValidationEvent
+   */
+  omit?: Prisma.FaceValidationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FaceValidationEventInclude<ExtArgs> | null
+  where?: Prisma.FaceValidationEventWhereInput
+  orderBy?: Prisma.FaceValidationEventOrderByWithRelationInput | Prisma.FaceValidationEventOrderByWithRelationInput[]
+  cursor?: Prisma.FaceValidationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FaceValidationEventScalarFieldEnum | Prisma.FaceValidationEventScalarFieldEnum[]
 }
 
 /**

@@ -29,10 +29,20 @@ export type TimeRecordType = (typeof TimeRecordType)[keyof typeof TimeRecordType
 
 export const RecordMethod = {
   MANUAL: 'MANUAL',
-  QR_CODE: 'QR_CODE'
+  QR_CODE: 'QR_CODE',
+  FACIAL: 'FACIAL'
 } as const
 
 export type RecordMethod = (typeof RecordMethod)[keyof typeof RecordMethod]
+
+
+export const FaceMatchDecision = {
+  APPROVED: 'APPROVED',
+  REVIEW: 'REVIEW',
+  REJECTED: 'REJECTED'
+} as const
+
+export type FaceMatchDecision = (typeof FaceMatchDecision)[keyof typeof FaceMatchDecision]
 
 
 export const AttendanceStatus = {

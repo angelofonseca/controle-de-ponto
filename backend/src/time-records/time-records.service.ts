@@ -4,11 +4,17 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
-import { TimeRecordType, RecordMethod } from '../generated/prisma/enums';
+import {
+  TimeRecordType,
+  RecordMethod,
+  FaceMatchDecision,
+} from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateManualTimeRecordDto } from './dto/create-manual-time-record.dto';
 import { CreateQrcodeTimeRecordDto } from './dto/create-qrcode-time-record.dto';
+import { CreateFacialTimeRecordDto } from './dto/create-facial-time-record.dto';
 import { FilterTimeRecordsDto } from './dto/filter-time-records.dto';
+import { FacialService } from '../facial/facial.service';
 
 const VALID_SEQUENCE: TimeRecordType[] = [
   TimeRecordType.CLOCK_IN,
@@ -19,7 +25,10 @@ const VALID_SEQUENCE: TimeRecordType[] = [
 
 @Injectable()
 export class TimeRecordsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly facialService: FacialService,
+  ) { }
 
   async createManual(dto: CreateManualTimeRecordDto, requestingUser: any) {
     await this.validateSequence(requestingUser.sub, dto.type);
@@ -78,6 +87,61 @@ export class TimeRecordsService {
     await this.updateAttendanceDay(requestingUser.sub, now);
 
     return record;
+  }
+
+  async createViaFacial(dto: CreateFacialTimeRecordDto, requestingUser: any) {
+    const validation = await this.facialService.validateSample(
+      {
+        sub: requestingUser.sub,
+        companyId: requestingUser.companyId,
+        role: requestingUser.role,
+      },
+      {
+        image: dto.image,
+        thresholdOverride: {
+          accept: dto.thresholdAccept,
+          review: dto.thresholdReview,
+        },
+      },
+    );
+
+    if (validation.decision === FaceMatchDecision.REJECTED) {
+      throw new ForbiddenException('Validação facial rejeitada');
+    }
+
+    if (validation.decision === FaceMatchDecision.REVIEW) {
+      return {
+        decision: validation.decision,
+        score: validation.score,
+        threshold: validation.threshold,
+        message: 'Validação facial requer revisão manual',
+      };
+    }
+
+    await this.validateSequence(requestingUser.sub, dto.type);
+
+    const now = new Date();
+
+    const record = await this.prisma.timeRecord.create({
+      data: {
+        type: dto.type,
+        method: RecordMethod.FACIAL,
+        recordedAt: now,
+        notes: dto.notes,
+        userId: requestingUser.sub,
+      },
+      include: { user: { select: { id: true, name: true } } },
+    });
+
+    await this.facialService.attachEventToTimeRecord(validation.eventId, record.id);
+    await this.updateAttendanceDay(requestingUser.sub, now);
+
+    return {
+      record,
+      facialDecision: validation.decision,
+      score: validation.score,
+      threshold: validation.threshold,
+    };
   }
 
   async findMyRecords(requestingUser: any, filter: FilterTimeRecordsDto) {

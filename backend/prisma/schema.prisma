@@ -29,6 +29,13 @@ enum TimeRecordType {
 enum RecordMethod {
   MANUAL
   QR_CODE
+  FACIAL
+}
+
+enum FaceMatchDecision {
+  APPROVED
+  REVIEW
+  REJECTED
 }
 
 enum AttendanceStatus {
@@ -55,9 +62,11 @@ model Company {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  users          User[]
-  workSchedules  WorkSchedule[]
-  qrCodeSessions QrCodeSession[]
+  users                User[]
+  workSchedules        WorkSchedule[]
+  qrCodeSessions       QrCodeSession[]
+  faceTemplates        FaceTemplate[]
+  faceValidationEvents FaceValidationEvent[]
 
   @@map("companies")
 }
@@ -75,10 +84,12 @@ model User {
   companyId String  @map("company_id")
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  refreshTokens   RefreshToken[]
-  employeeProfile EmployeeProfile?
-  timeRecords     TimeRecord[]
-  attendanceDays  AttendanceDay[]
+  refreshTokens        RefreshToken[]
+  employeeProfile      EmployeeProfile?
+  timeRecords          TimeRecord[]
+  attendanceDays       AttendanceDay[]
+  faceTemplates        FaceTemplate[]
+  faceValidationEvents FaceValidationEvent[]
 
   @@map("users")
 }
@@ -147,7 +158,59 @@ model TimeRecord {
   qrCodeSessionId String?        @map("qr_code_session_id")
   qrCodeSession   QrCodeSession? @relation(fields: [qrCodeSessionId], references: [id])
 
+  faceValidationEvents FaceValidationEvent[]
+
   @@map("time_records")
+}
+
+model FaceTemplate {
+  id             String   @id @default(uuid())
+  embedding      Float[]
+  engine         String   @default("insightface")
+  version        String   @default("arcface")
+  samplesCount   Int      @default(0) @map("samples_count")
+  qualityScore   Float?   @map("quality_score")
+  livenessPassed Boolean? @map("liveness_passed")
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  userId    String  @map("user_id")
+  companyId String  @map("company_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  validationEvents FaceValidationEvent[]
+
+  @@index([userId])
+  @@index([companyId])
+  @@map("face_templates")
+}
+
+model FaceValidationEvent {
+  id        String            @id @default(uuid())
+  score     Float
+  threshold Float
+  decision  FaceMatchDecision
+  metadata  Json?
+  createdAt DateTime          @default(now()) @map("created_at")
+
+  templateId String?       @map("template_id")
+  template   FaceTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+
+  userId    String  @map("user_id")
+  companyId String  @map("company_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  timeRecordId String?     @map("time_record_id")
+  timeRecord   TimeRecord? @relation(fields: [timeRecordId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([companyId])
+  @@index([templateId])
+  @@index([timeRecordId])
+  @@map("face_validation_events")
 }
 
 model AttendanceDay {
