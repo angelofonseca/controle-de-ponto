@@ -217,6 +217,8 @@ export type CompanyWhereInput = {
   users?: Prisma.UserListRelationFilter
   workSchedules?: Prisma.WorkScheduleListRelationFilter
   qrCodeSessions?: Prisma.QrCodeSessionListRelationFilter
+  faceTemplates?: Prisma.FaceTemplateListRelationFilter
+  faceValidationEvents?: Prisma.FaceValidationEventListRelationFilter
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -232,6 +234,8 @@ export type CompanyOrderByWithRelationInput = {
   users?: Prisma.UserOrderByRelationAggregateInput
   workSchedules?: Prisma.WorkScheduleOrderByRelationAggregateInput
   qrCodeSessions?: Prisma.QrCodeSessionOrderByRelationAggregateInput
+  faceTemplates?: Prisma.FaceTemplateOrderByRelationAggregateInput
+  faceValidationEvents?: Prisma.FaceValidationEventOrderByRelationAggregateInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -250,6 +254,8 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   users?: Prisma.UserListRelationFilter
   workSchedules?: Prisma.WorkScheduleListRelationFilter
   qrCodeSessions?: Prisma.QrCodeSessionListRelationFilter
+  faceTemplates?: Prisma.FaceTemplateListRelationFilter
+  faceValidationEvents?: Prisma.FaceValidationEventListRelationFilter
 }, "id" | "cnpj" | "email">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -295,6 +301,8 @@ export type CompanyCreateInput = {
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutCompanyInput
   qrCodeSessions?: Prisma.QrCodeSessionCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -310,6 +318,8 @@ export type CompanyUncheckedCreateInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutCompanyInput
   qrCodeSessions?: Prisma.QrCodeSessionUncheckedCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -325,6 +335,8 @@ export type CompanyUpdateInput = {
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutCompanyNestedInput
   qrCodeSessions?: Prisma.QrCodeSessionUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -340,6 +352,8 @@ export type CompanyUncheckedUpdateInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutCompanyNestedInput
   qrCodeSessions?: Prisma.QrCodeSessionUncheckedUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -463,6 +477,34 @@ export type CompanyUpdateOneRequiredWithoutWorkSchedulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutWorkSchedulesInput, Prisma.CompanyUpdateWithoutWorkSchedulesInput>, Prisma.CompanyUncheckedUpdateWithoutWorkSchedulesInput>
 }
 
+export type CompanyCreateNestedOneWithoutFaceTemplatesInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutFaceTemplatesInput, Prisma.CompanyUncheckedCreateWithoutFaceTemplatesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutFaceTemplatesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutFaceTemplatesNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutFaceTemplatesInput, Prisma.CompanyUncheckedCreateWithoutFaceTemplatesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutFaceTemplatesInput
+  upsert?: Prisma.CompanyUpsertWithoutFaceTemplatesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutFaceTemplatesInput, Prisma.CompanyUpdateWithoutFaceTemplatesInput>, Prisma.CompanyUncheckedUpdateWithoutFaceTemplatesInput>
+}
+
+export type CompanyCreateNestedOneWithoutFaceValidationEventsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutFaceValidationEventsInput, Prisma.CompanyUncheckedCreateWithoutFaceValidationEventsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutFaceValidationEventsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutFaceValidationEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutFaceValidationEventsInput, Prisma.CompanyUncheckedCreateWithoutFaceValidationEventsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutFaceValidationEventsInput
+  upsert?: Prisma.CompanyUpsertWithoutFaceValidationEventsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutFaceValidationEventsInput, Prisma.CompanyUpdateWithoutFaceValidationEventsInput>, Prisma.CompanyUncheckedUpdateWithoutFaceValidationEventsInput>
+}
+
 export type CompanyCreateNestedOneWithoutQrCodeSessionsInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutQrCodeSessionsInput, Prisma.CompanyUncheckedCreateWithoutQrCodeSessionsInput>
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutQrCodeSessionsInput
@@ -489,6 +531,8 @@ export type CompanyCreateWithoutUsersInput = {
   updatedAt?: Date | string
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutCompanyInput
   qrCodeSessions?: Prisma.QrCodeSessionCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutUsersInput = {
@@ -503,6 +547,8 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   updatedAt?: Date | string
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutCompanyInput
   qrCodeSessions?: Prisma.QrCodeSessionUncheckedCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutUsersInput = {
@@ -533,6 +579,8 @@ export type CompanyUpdateWithoutUsersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutCompanyNestedInput
   qrCodeSessions?: Prisma.QrCodeSessionUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutUsersInput = {
@@ -547,6 +595,8 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutCompanyNestedInput
   qrCodeSessions?: Prisma.QrCodeSessionUncheckedUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutWorkSchedulesInput = {
@@ -561,6 +611,8 @@ export type CompanyCreateWithoutWorkSchedulesInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   qrCodeSessions?: Prisma.QrCodeSessionCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutWorkSchedulesInput = {
@@ -575,6 +627,8 @@ export type CompanyUncheckedCreateWithoutWorkSchedulesInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   qrCodeSessions?: Prisma.QrCodeSessionUncheckedCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutWorkSchedulesInput = {
@@ -605,6 +659,8 @@ export type CompanyUpdateWithoutWorkSchedulesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   qrCodeSessions?: Prisma.QrCodeSessionUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutWorkSchedulesInput = {
@@ -619,6 +675,168 @@ export type CompanyUncheckedUpdateWithoutWorkSchedulesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   qrCodeSessions?: Prisma.QrCodeSessionUncheckedUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutFaceTemplatesInput = {
+  id?: string
+  name: string
+  cnpj?: string | null
+  email: string
+  phone?: string | null
+  address?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutCompanyInput
+  qrCodeSessions?: Prisma.QrCodeSessionCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutFaceTemplatesInput = {
+  id?: string
+  name: string
+  cnpj?: string | null
+  email: string
+  phone?: string | null
+  address?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutCompanyInput
+  qrCodeSessions?: Prisma.QrCodeSessionUncheckedCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutFaceTemplatesInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutFaceTemplatesInput, Prisma.CompanyUncheckedCreateWithoutFaceTemplatesInput>
+}
+
+export type CompanyUpsertWithoutFaceTemplatesInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutFaceTemplatesInput, Prisma.CompanyUncheckedUpdateWithoutFaceTemplatesInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutFaceTemplatesInput, Prisma.CompanyUncheckedCreateWithoutFaceTemplatesInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutFaceTemplatesInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutFaceTemplatesInput, Prisma.CompanyUncheckedUpdateWithoutFaceTemplatesInput>
+}
+
+export type CompanyUpdateWithoutFaceTemplatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  workSchedules?: Prisma.WorkScheduleUpdateManyWithoutCompanyNestedInput
+  qrCodeSessions?: Prisma.QrCodeSessionUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutFaceTemplatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutCompanyNestedInput
+  qrCodeSessions?: Prisma.QrCodeSessionUncheckedUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutFaceValidationEventsInput = {
+  id?: string
+  name: string
+  cnpj?: string | null
+  email: string
+  phone?: string | null
+  address?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutCompanyInput
+  qrCodeSessions?: Prisma.QrCodeSessionCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutFaceValidationEventsInput = {
+  id?: string
+  name: string
+  cnpj?: string | null
+  email: string
+  phone?: string | null
+  address?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutCompanyInput
+  qrCodeSessions?: Prisma.QrCodeSessionUncheckedCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutFaceValidationEventsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutFaceValidationEventsInput, Prisma.CompanyUncheckedCreateWithoutFaceValidationEventsInput>
+}
+
+export type CompanyUpsertWithoutFaceValidationEventsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutFaceValidationEventsInput, Prisma.CompanyUncheckedUpdateWithoutFaceValidationEventsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutFaceValidationEventsInput, Prisma.CompanyUncheckedCreateWithoutFaceValidationEventsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutFaceValidationEventsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutFaceValidationEventsInput, Prisma.CompanyUncheckedUpdateWithoutFaceValidationEventsInput>
+}
+
+export type CompanyUpdateWithoutFaceValidationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  workSchedules?: Prisma.WorkScheduleUpdateManyWithoutCompanyNestedInput
+  qrCodeSessions?: Prisma.QrCodeSessionUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutFaceValidationEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  cnpj?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutCompanyNestedInput
+  qrCodeSessions?: Prisma.QrCodeSessionUncheckedUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutQrCodeSessionsInput = {
@@ -633,6 +851,8 @@ export type CompanyCreateWithoutQrCodeSessionsInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   workSchedules?: Prisma.WorkScheduleCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutQrCodeSessionsInput = {
@@ -647,6 +867,8 @@ export type CompanyUncheckedCreateWithoutQrCodeSessionsInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   workSchedules?: Prisma.WorkScheduleUncheckedCreateNestedManyWithoutCompanyInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedCreateNestedManyWithoutCompanyInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutQrCodeSessionsInput = {
@@ -677,6 +899,8 @@ export type CompanyUpdateWithoutQrCodeSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   workSchedules?: Prisma.WorkScheduleUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutQrCodeSessionsInput = {
@@ -691,6 +915,8 @@ export type CompanyUncheckedUpdateWithoutQrCodeSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   workSchedules?: Prisma.WorkScheduleUncheckedUpdateManyWithoutCompanyNestedInput
+  faceTemplates?: Prisma.FaceTemplateUncheckedUpdateManyWithoutCompanyNestedInput
+  faceValidationEvents?: Prisma.FaceValidationEventUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -702,12 +928,16 @@ export type CompanyCountOutputType = {
   users: number
   workSchedules: number
   qrCodeSessions: number
+  faceTemplates: number
+  faceValidationEvents: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | CompanyCountOutputTypeCountUsersArgs
   workSchedules?: boolean | CompanyCountOutputTypeCountWorkSchedulesArgs
   qrCodeSessions?: boolean | CompanyCountOutputTypeCountQrCodeSessionsArgs
+  faceTemplates?: boolean | CompanyCountOutputTypeCountFaceTemplatesArgs
+  faceValidationEvents?: boolean | CompanyCountOutputTypeCountFaceValidationEventsArgs
 }
 
 /**
@@ -741,6 +971,20 @@ export type CompanyCountOutputTypeCountQrCodeSessionsArgs<ExtArgs extends runtim
   where?: Prisma.QrCodeSessionWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountFaceTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FaceTemplateWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountFaceValidationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FaceValidationEventWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -755,6 +999,8 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   workSchedules?: boolean | Prisma.Company$workSchedulesArgs<ExtArgs>
   qrCodeSessions?: boolean | Prisma.Company$qrCodeSessionsArgs<ExtArgs>
+  faceTemplates?: boolean | Prisma.Company$faceTemplatesArgs<ExtArgs>
+  faceValidationEvents?: boolean | Prisma.Company$faceValidationEventsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -799,6 +1045,8 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   workSchedules?: boolean | Prisma.Company$workSchedulesArgs<ExtArgs>
   qrCodeSessions?: boolean | Prisma.Company$qrCodeSessionsArgs<ExtArgs>
+  faceTemplates?: boolean | Prisma.Company$faceTemplatesArgs<ExtArgs>
+  faceValidationEvents?: boolean | Prisma.Company$faceValidationEventsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -810,6 +1058,8 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     users: Prisma.$UserPayload<ExtArgs>[]
     workSchedules: Prisma.$WorkSchedulePayload<ExtArgs>[]
     qrCodeSessions: Prisma.$QrCodeSessionPayload<ExtArgs>[]
+    faceTemplates: Prisma.$FaceTemplatePayload<ExtArgs>[]
+    faceValidationEvents: Prisma.$FaceValidationEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1218,6 +1468,8 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   users<T extends Prisma.Company$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workSchedules<T extends Prisma.Company$workSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$workSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   qrCodeSessions<T extends Prisma.Company$qrCodeSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$qrCodeSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QrCodeSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  faceTemplates<T extends Prisma.Company$faceTemplatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$faceTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  faceValidationEvents<T extends Prisma.Company$faceValidationEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$faceValidationEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FaceValidationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1718,6 +1970,54 @@ export type Company$qrCodeSessionsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.QrCodeSessionScalarFieldEnum | Prisma.QrCodeSessionScalarFieldEnum[]
+}
+
+/**
+ * Company.faceTemplates
+ */
+export type Company$faceTemplatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FaceTemplate
+   */
+  select?: Prisma.FaceTemplateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FaceTemplate
+   */
+  omit?: Prisma.FaceTemplateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FaceTemplateInclude<ExtArgs> | null
+  where?: Prisma.FaceTemplateWhereInput
+  orderBy?: Prisma.FaceTemplateOrderByWithRelationInput | Prisma.FaceTemplateOrderByWithRelationInput[]
+  cursor?: Prisma.FaceTemplateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FaceTemplateScalarFieldEnum | Prisma.FaceTemplateScalarFieldEnum[]
+}
+
+/**
+ * Company.faceValidationEvents
+ */
+export type Company$faceValidationEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FaceValidationEvent
+   */
+  select?: Prisma.FaceValidationEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FaceValidationEvent
+   */
+  omit?: Prisma.FaceValidationEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FaceValidationEventInclude<ExtArgs> | null
+  where?: Prisma.FaceValidationEventWhereInput
+  orderBy?: Prisma.FaceValidationEventOrderByWithRelationInput | Prisma.FaceValidationEventOrderByWithRelationInput[]
+  cursor?: Prisma.FaceValidationEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FaceValidationEventScalarFieldEnum | Prisma.FaceValidationEventScalarFieldEnum[]
 }
 
 /**

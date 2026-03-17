@@ -170,6 +170,16 @@ class ApiClient {
     return this.request<TimeRecord>('POST', '/time-records/qrcode', data);
   }
 
+  async createFacialRecord(data: {
+    type: TimeRecordType;
+    image: string;
+    notes?: string;
+    thresholdAccept?: number;
+    thresholdReview?: number;
+  }): Promise<{ record: TimeRecord; facialDecision: string; score: number; threshold: { accept: number; review: number } } | { decision: string; score: number; threshold: { accept: number; review: number }; message?: string }> {
+    return this.request('POST', '/time-records/facial', data);
+  }
+
   async getMyRecords(params?: {
     startDate?: string;
     endDate?: string;

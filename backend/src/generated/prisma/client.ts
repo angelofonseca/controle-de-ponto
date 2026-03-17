@@ -70,6 +70,16 @@ export type WorkSchedule = Prisma.WorkScheduleModel
  */
 export type TimeRecord = Prisma.TimeRecordModel
 /**
+ * Model FaceTemplate
+ * 
+ */
+export type FaceTemplate = Prisma.FaceTemplateModel
+/**
+ * Model FaceValidationEvent
+ * 
+ */
+export type FaceValidationEvent = Prisma.FaceValidationEventModel
+/**
  * Model AttendanceDay
  * 
  */

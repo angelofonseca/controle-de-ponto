@@ -4,6 +4,7 @@ import { Role } from '../generated/prisma/enums';
 import { TimeRecordsService } from './time-records.service';
 import { CreateManualTimeRecordDto } from './dto/create-manual-time-record.dto';
 import { CreateQrcodeTimeRecordDto } from './dto/create-qrcode-time-record.dto';
+import { CreateFacialTimeRecordDto } from './dto/create-facial-time-record.dto';
 import { FilterTimeRecordsDto } from './dto/filter-time-records.dto';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
@@ -12,7 +13,7 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 @ApiBearerAuth('JWT-auth')
 @Controller('time-records')
 export class TimeRecordsController {
-  constructor(private readonly timeRecordsService: TimeRecordsService) {}
+  constructor(private readonly timeRecordsService: TimeRecordsService) { }
 
   @Post('manual')
   @ApiOperation({ summary: 'Registrar ponto manualmente' })
@@ -30,6 +31,15 @@ export class TimeRecordsController {
     @CurrentUser() user: any,
   ) {
     return this.timeRecordsService.createViaQrcode(dto, user);
+  }
+
+  @Post('facial')
+  @ApiOperation({ summary: 'Registrar ponto via reconhecimento facial' })
+  async createViaFacial(
+    @Body() dto: CreateFacialTimeRecordDto,
+    @CurrentUser() user: any,
+  ) {
+    return this.timeRecordsService.createViaFacial(dto, user);
   }
 
   @Get('me')

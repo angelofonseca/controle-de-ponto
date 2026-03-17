@@ -390,6 +390,8 @@ export const ModelName = {
   EmployeeProfile: 'EmployeeProfile',
   WorkSchedule: 'WorkSchedule',
   TimeRecord: 'TimeRecord',
+  FaceTemplate: 'FaceTemplate',
+  FaceValidationEvent: 'FaceValidationEvent',
   AttendanceDay: 'AttendanceDay',
   QrCodeSession: 'QrCodeSession'
 } as const
@@ -407,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "refreshToken" | "employeeProfile" | "workSchedule" | "timeRecord" | "attendanceDay" | "qrCodeSession"
+    modelProps: "company" | "user" | "refreshToken" | "employeeProfile" | "workSchedule" | "timeRecord" | "faceTemplate" | "faceValidationEvent" | "attendanceDay" | "qrCodeSession"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -855,6 +857,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FaceTemplate: {
+      payload: Prisma.$FaceTemplatePayload<ExtArgs>
+      fields: Prisma.FaceTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FaceTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FaceTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.FaceTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FaceTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.FaceTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.FaceTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.FaceTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FaceTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.FaceTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>
+        }
+        update: {
+          args: Prisma.FaceTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.FaceTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FaceTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FaceTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.FaceTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.FaceTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFaceTemplate>
+        }
+        groupBy: {
+          args: Prisma.FaceTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FaceTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FaceTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FaceTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
+    FaceValidationEvent: {
+      payload: Prisma.$FaceValidationEventPayload<ExtArgs>
+      fields: Prisma.FaceValidationEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FaceValidationEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FaceValidationEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>
+        }
+        findFirst: {
+          args: Prisma.FaceValidationEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FaceValidationEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>
+        }
+        findMany: {
+          args: Prisma.FaceValidationEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>[]
+        }
+        create: {
+          args: Prisma.FaceValidationEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>
+        }
+        createMany: {
+          args: Prisma.FaceValidationEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FaceValidationEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>[]
+        }
+        delete: {
+          args: Prisma.FaceValidationEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>
+        }
+        update: {
+          args: Prisma.FaceValidationEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.FaceValidationEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FaceValidationEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FaceValidationEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.FaceValidationEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FaceValidationEventPayload>
+        }
+        aggregate: {
+          args: Prisma.FaceValidationEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFaceValidationEvent>
+        }
+        groupBy: {
+          args: Prisma.FaceValidationEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FaceValidationEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FaceValidationEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FaceValidationEventCountAggregateOutputType> | number
+        }
+      }
+    }
     AttendanceDay: {
       payload: Prisma.$AttendanceDayPayload<ExtArgs>
       fields: Prisma.AttendanceDayFieldRefs
@@ -1129,6 +1279,40 @@ export const TimeRecordScalarFieldEnum = {
 export type TimeRecordScalarFieldEnum = (typeof TimeRecordScalarFieldEnum)[keyof typeof TimeRecordScalarFieldEnum]
 
 
+export const FaceTemplateScalarFieldEnum = {
+  id: 'id',
+  embedding: 'embedding',
+  engine: 'engine',
+  version: 'version',
+  samplesCount: 'samplesCount',
+  qualityScore: 'qualityScore',
+  livenessPassed: 'livenessPassed',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  companyId: 'companyId'
+} as const
+
+export type FaceTemplateScalarFieldEnum = (typeof FaceTemplateScalarFieldEnum)[keyof typeof FaceTemplateScalarFieldEnum]
+
+
+export const FaceValidationEventScalarFieldEnum = {
+  id: 'id',
+  score: 'score',
+  threshold: 'threshold',
+  decision: 'decision',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  templateId: 'templateId',
+  userId: 'userId',
+  companyId: 'companyId',
+  timeRecordId: 'timeRecordId'
+} as const
+
+export type FaceValidationEventScalarFieldEnum = (typeof FaceValidationEventScalarFieldEnum)[keyof typeof FaceValidationEventScalarFieldEnum]
+
+
 export const AttendanceDayScalarFieldEnum = {
   id: 'id',
   date: 'date',
@@ -1167,6 +1351,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -1181,6 +1373,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1281,16 +1482,9 @@ export type ListEnumRecordMethodFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'AttendanceStatus'
+ * Reference to a field of type 'Float[]'
  */
-export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus'>
-    
-
-
-/**
- * Reference to a field of type 'AttendanceStatus[]'
- */
-export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -1302,9 +1496,44 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
 
 
 /**
- * Reference to a field of type 'Float[]'
+ * Reference to a field of type 'FaceMatchDecision'
  */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+export type EnumFaceMatchDecisionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FaceMatchDecision'>
+    
+
+
+/**
+ * Reference to a field of type 'FaceMatchDecision[]'
+ */
+export type ListEnumFaceMatchDecisionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FaceMatchDecision[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'AttendanceStatus'
+ */
+export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AttendanceStatus[]'
+ */
+export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
     
 
 /**
@@ -1408,6 +1637,8 @@ export type GlobalOmitConfig = {
   employeeProfile?: Prisma.EmployeeProfileOmit
   workSchedule?: Prisma.WorkScheduleOmit
   timeRecord?: Prisma.TimeRecordOmit
+  faceTemplate?: Prisma.FaceTemplateOmit
+  faceValidationEvent?: Prisma.FaceValidationEventOmit
   attendanceDay?: Prisma.AttendanceDayOmit
   qrCodeSession?: Prisma.QrCodeSessionOmit
 }

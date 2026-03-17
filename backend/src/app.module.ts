@@ -12,6 +12,7 @@ import { TimeRecordsModule } from './time-records/time-records.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { QrcodeModule } from './qrcode/qrcode.module';
 import { HealthModule } from './health/health.module';
+import { FacialModule } from './facial/facial.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { HealthModule } from './health/health.module';
     AttendanceModule,
     QrcodeModule,
     HealthModule,
+    FacialModule,
   ],
   providers: [
     {

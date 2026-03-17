@@ -57,6 +57,8 @@ export const ModelName = {
   EmployeeProfile: 'EmployeeProfile',
   WorkSchedule: 'WorkSchedule',
   TimeRecord: 'TimeRecord',
+  FaceTemplate: 'FaceTemplate',
+  FaceValidationEvent: 'FaceValidationEvent',
   AttendanceDay: 'AttendanceDay',
   QrCodeSession: 'QrCodeSession'
 } as const
@@ -164,6 +166,40 @@ export const TimeRecordScalarFieldEnum = {
 export type TimeRecordScalarFieldEnum = (typeof TimeRecordScalarFieldEnum)[keyof typeof TimeRecordScalarFieldEnum]
 
 
+export const FaceTemplateScalarFieldEnum = {
+  id: 'id',
+  embedding: 'embedding',
+  engine: 'engine',
+  version: 'version',
+  samplesCount: 'samplesCount',
+  qualityScore: 'qualityScore',
+  livenessPassed: 'livenessPassed',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  companyId: 'companyId'
+} as const
+
+export type FaceTemplateScalarFieldEnum = (typeof FaceTemplateScalarFieldEnum)[keyof typeof FaceTemplateScalarFieldEnum]
+
+
+export const FaceValidationEventScalarFieldEnum = {
+  id: 'id',
+  score: 'score',
+  threshold: 'threshold',
+  decision: 'decision',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  templateId: 'templateId',
+  userId: 'userId',
+  companyId: 'companyId',
+  timeRecordId: 'timeRecordId'
+} as const
+
+export type FaceValidationEventScalarFieldEnum = (typeof FaceValidationEventScalarFieldEnum)[keyof typeof FaceValidationEventScalarFieldEnum]
+
+
 export const AttendanceDayScalarFieldEnum = {
   id: 'id',
   date: 'date',
@@ -202,6 +238,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -216,4 +260,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

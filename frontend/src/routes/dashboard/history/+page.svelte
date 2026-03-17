@@ -58,12 +58,12 @@
   <div class="card p-4">
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <label class="block text-xs font-medium text-gray-500 mb-1">Data inicial</label>
-        <input type="date" bind:value={startDate} class="input text-sm" />
+        <label for="start-date" class="block text-xs font-medium text-gray-500 mb-1">Data inicial</label>
+        <input id="start-date" type="date" bind:value={startDate} class="input text-sm" />
       </div>
       <div>
-        <label class="block text-xs font-medium text-gray-500 mb-1">Data final</label>
-        <input type="date" bind:value={endDate} class="input text-sm" />
+        <label for="end-date" class="block text-xs font-medium text-gray-500 mb-1">Data final</label>
+        <input id="end-date" type="date" bind:value={endDate} class="input text-sm" />
       </div>
     </div>
     <button on:click={loadRecords} class="btn-primary mt-3 w-full">Filtrar</button>
@@ -95,7 +95,9 @@
                 </span>
                 <div>
                   <p class="text-sm font-medium text-gray-900">{getTimeRecordLabel(record.type)}</p>
-                  <p class="text-xs text-gray-400">{record.method === 'QR_CODE' ? 'QR Code' : 'Manual'}</p>
+                  <p class="text-xs text-gray-400">
+                    {record.method === 'QR_CODE' ? 'QR Code' : record.method === 'FACIAL' ? 'Facial' : 'Manual'}
+                  </p>
                 </div>
               </div>
               <span class="text-sm text-gray-700">{formatTime(record.recordedAt)}</span>
