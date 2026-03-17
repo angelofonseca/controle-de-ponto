@@ -34,6 +34,19 @@ export class EmployeesService {
       throw new ConflictException('Perfil de colaborador já existe');
     }
 
+    // Validate workScheduleId belongs to the same company
+    if (createEmployeeDto.workScheduleId) {
+      const schedule = await this.prisma.workSchedule.findUnique({
+        where: { id: createEmployeeDto.workScheduleId },
+      });
+
+      if (!schedule || schedule.companyId !== requestingUser.companyId) {
+        throw new ForbiddenException(
+          'Jornada de trabalho não pertence a esta empresa',
+        );
+      }
+    }
+
     return this.prisma.employeeProfile.create({
       data: {
         userId: createEmployeeDto.userId,
@@ -101,6 +114,19 @@ export class EmployeesService {
     requestingUser: any,
   ) {
     await this.findOne(id, requestingUser);
+
+    // Validate workScheduleId belongs to the same company
+    if (updateEmployeeDto.workScheduleId) {
+      const schedule = await this.prisma.workSchedule.findUnique({
+        where: { id: updateEmployeeDto.workScheduleId },
+      });
+
+      if (!schedule || schedule.companyId !== requestingUser.companyId) {
+        throw new ForbiddenException(
+          'Jornada de trabalho não pertence a esta empresa',
+        );
+      }
+    }
 
     const data: any = { ...updateEmployeeDto };
     if (updateEmployeeDto.hireDate) {

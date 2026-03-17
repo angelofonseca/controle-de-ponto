@@ -125,38 +125,42 @@ export class AuthService {
   }
 
   async refresh(refreshTokenDto: RefreshTokenDto) {
-    const storedToken = await this.prisma.refreshToken.findUnique({
-      where: { token: refreshTokenDto.refreshToken },
-      include: { user: { include: { company: true } } },
-    });
+    const result = await this.prisma.$transaction(async (tx) => {
+      const storedToken = await tx.refreshToken.findUnique({
+        where: { token: refreshTokenDto.refreshToken },
+        include: { user: { include: { company: true } } },
+      });
 
-    if (!storedToken || storedToken.revoked) {
-      throw new UnauthorizedException('Refresh token inválido');
-    }
+      if (!storedToken || storedToken.revoked) {
+        throw new UnauthorizedException('Refresh token inválido');
+      }
 
-    if (storedToken.expiresAt < new Date()) {
-      await this.prisma.refreshToken.update({
+      if (storedToken.expiresAt < new Date()) {
+        await tx.refreshToken.update({
+          where: { id: storedToken.id },
+          data: { revoked: true },
+        });
+        throw new UnauthorizedException('Refresh token expirado');
+      }
+
+      // Atomically revoke old token
+      await tx.refreshToken.update({
         where: { id: storedToken.id },
         data: { revoked: true },
       });
-      throw new UnauthorizedException('Refresh token expirado');
-    }
 
-    // Revoke old token
-    await this.prisma.refreshToken.update({
-      where: { id: storedToken.id },
-      data: { revoked: true },
+      return storedToken;
     });
 
-    const tokens = await this.generateTokens(storedToken.user);
+    const tokens = await this.generateTokens(result.user);
 
     return {
       user: {
-        id: storedToken.user.id,
-        email: storedToken.user.email,
-        name: storedToken.user.name,
-        role: storedToken.user.role,
-        companyId: storedToken.user.companyId,
+        id: result.user.id,
+        email: result.user.email,
+        name: result.user.name,
+        role: result.user.role,
+        companyId: result.user.companyId,
       },
       ...tokens,
     };
@@ -186,8 +190,13 @@ export class AuthService {
       companyId: user.companyId,
     };
 
+    const jwtSecret = this.configService.get<string>('JWT_SECRET');
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET environment variable is not configured');
+    }
+
     const accessToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('JWT_SECRET', 'default_secret'),
+      secret: jwtSecret,
       expiresIn: this.configService.get<string>('JWT_EXPIRES_IN', '15m'),
     });
 

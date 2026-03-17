@@ -75,6 +75,12 @@ export class TimeRecordsService {
       include: { user: { select: { id: true, name: true } } },
     });
 
+    // Mark QR code session as used
+    await this.prisma.qrCodeSession.update({
+      where: { id: session.id },
+      data: { used: true, usedAt: now },
+    });
+
     await this.updateAttendanceDay(requestingUser.sub, now);
 
     return record;
@@ -137,10 +143,12 @@ export class TimeRecordsService {
   }
 
   private async validateSequence(userId: string, newType: TimeRecordType) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const today = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+    );
     const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
 
     const todayRecords = await this.prisma.timeRecord.findMany({
       where: {
@@ -172,8 +180,13 @@ export class TimeRecordsService {
   }
 
   private async updateAttendanceDay(userId: string, recordedAt: Date) {
-    const date = new Date(recordedAt);
-    date.setHours(0, 0, 0, 0);
+    const date = new Date(
+      Date.UTC(
+        recordedAt.getUTCFullYear(),
+        recordedAt.getUTCMonth(),
+        recordedAt.getUTCDate(),
+      ),
+    );
 
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
@@ -204,8 +217,27 @@ export class TimeRecordsService {
       (r) => r.type === TimeRecordType.CLOCK_OUT,
     );
 
+    // Check lateness first (applies whether day is completed or not)
+    const workSchedule = user?.employeeProfile?.workSchedule;
+    if (clockIn && workSchedule) {
+      const [startHour, startMin] = workSchedule.startTime
+        .split(':')
+        .map(Number);
+      const expectedStart = new Date(date);
+      expectedStart.setUTCHours(startHour, startMin, 0, 0);
+      const actualStart = new Date(clockIn.recordedAt);
+      const diffMinutes = Math.floor(
+        (actualStart.getTime() - expectedStart.getTime()) / 60000,
+      );
+
+      if (diffMinutes > (workSchedule.toleranceMinutes || 10)) {
+        lateMinutes = diffMinutes;
+      }
+    }
+
     if (clockIn && clockOut) {
-      status = 'COMPLETED';
+      // Preserve LATE info when completing the day
+      status = lateMinutes > 0 ? 'LATE' : 'COMPLETED';
       const clockInTime = new Date(clockIn.recordedAt);
       const clockOutTime = new Date(clockOut.recordedAt);
       const breakStart = todayRecords.find(
@@ -220,7 +252,7 @@ export class TimeRecordsService {
         breakMinutes = Math.floor(
           (new Date(breakEnd.recordedAt).getTime() -
             new Date(breakStart.recordedAt).getTime()) /
-          60000,
+            60000,
         );
       }
 
@@ -228,23 +260,7 @@ export class TimeRecordsService {
         Math.floor((clockOutTime.getTime() - clockInTime.getTime()) / 60000) -
         breakMinutes;
     } else if (clockIn) {
-      const workSchedule = user?.employeeProfile?.workSchedule;
-      if (workSchedule) {
-        const [startHour, startMin] = workSchedule.startTime
-          .split(':')
-          .map(Number);
-        const expectedStart = new Date(date);
-        expectedStart.setHours(startHour, startMin, 0, 0);
-        const actualStart = new Date(clockIn.recordedAt);
-        const diffMinutes = Math.floor(
-          (actualStart.getTime() - expectedStart.getTime()) / 60000,
-        );
-
-        if (diffMinutes > (workSchedule.toleranceMinutes || 10)) {
-          status = 'LATE';
-          lateMinutes = diffMinutes;
-        }
-      }
+      status = lateMinutes > 0 ? 'LATE' : 'IN_PROGRESS';
     }
 
     await this.prisma.attendanceDay.upsert({

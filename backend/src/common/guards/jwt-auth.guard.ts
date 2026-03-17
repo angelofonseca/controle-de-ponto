@@ -35,8 +35,13 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     try {
+      const jwtSecret = this.configService.get<string>('JWT_SECRET');
+      if (!jwtSecret) {
+        throw new Error('JWT_SECRET environment variable is not configured');
+      }
+
       const payload = this.jwtService.verify(token, {
-        secret: this.configService.get<string>('JWT_SECRET', 'default_secret'),
+        secret: jwtSecret,
       });
       request.user = payload;
       return true;

@@ -80,6 +80,7 @@ model User {
   timeRecords     TimeRecord[]
   attendanceDays  AttendanceDay[]
 
+  @@index([companyId])
   @@map("users")
 }
 
@@ -93,6 +94,8 @@ model RefreshToken {
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
+  @@index([revoked, expiresAt])
   @@map("refresh_tokens")
 }
 
@@ -130,6 +133,7 @@ model WorkSchedule {
 
   employees EmployeeProfile[]
 
+  @@index([companyId])
   @@map("work_schedules")
 }
 
@@ -147,6 +151,7 @@ model TimeRecord {
   qrCodeSessionId String?        @map("qr_code_session_id")
   qrCodeSession   QrCodeSession? @relation(fields: [qrCodeSessionId], references: [id])
 
+  @@index([userId, recordedAt])
   @@map("time_records")
 }
 
@@ -182,5 +187,6 @@ model QrCodeSession {
 
   timeRecords TimeRecord[]
 
+  @@index([companyId, expiresAt])
   @@map("qr_code_sessions")
 }

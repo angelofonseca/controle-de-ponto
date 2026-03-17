@@ -64,32 +64,36 @@ async function bootstrap() {
   // Global prefix
   app.setGlobalPrefix('api');
 
-  // Swagger documentation
-  const config = new DocumentBuilder()
-    .setTitle('Controle de Ponto API')
-    .setDescription('API para o sistema de controle de ponto')
-    .setVersion('1.0')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'JWT-auth',
-    )
-    .addTag('auth', 'Autenticação')
-    .addTag('companies', 'Empresas')
-    .addTag('users', 'Usuários')
-    .addTag('employees', 'Colaboradores')
-    .addTag('work-schedules', 'Jornadas de Trabalho')
-    .addTag('time-records', 'Registros de Ponto')
-    .addTag('attendance', 'Frequência')
-    .addTag('qrcode', 'QR Code')
-    .build();
+  // Swagger documentation (development only)
+  if (!isProduction) {
+    const config = new DocumentBuilder()
+      .setTitle('Controle de Ponto API')
+      .setDescription('API para o sistema de controle de ponto')
+      .setVersion('1.0')
+      .addBearerAuth(
+        { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+        'JWT-auth',
+      )
+      .addTag('auth', 'Autenticação')
+      .addTag('companies', 'Empresas')
+      .addTag('users', 'Usuários')
+      .addTag('employees', 'Colaboradores')
+      .addTag('work-schedules', 'Jornadas de Trabalho')
+      .addTag('time-records', 'Registros de Ponto')
+      .addTag('attendance', 'Frequência')
+      .addTag('qrcode', 'QR Code')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('docs', app, document);
+  }
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  console.log(`🚀 Application running on: http://localhost:${port}`);
-  console.log(`📚 Swagger docs: http://localhost:${port}/docs`);
+  console.log(`Application running on: http://localhost:${port}`);
+  if (!isProduction) {
+    console.log(`Swagger docs: http://localhost:${port}/docs`);
+  }
 }
 
 bootstrap();

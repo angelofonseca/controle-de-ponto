@@ -68,9 +68,23 @@ export class CompaniesService {
   async remove(id: string) {
     await this.findOne(id);
 
-    return this.prisma.company.update({
-      where: { id },
-      data: { active: false },
+    return this.prisma.$transaction(async (tx) => {
+      // Deactivate all users from this company
+      await tx.user.updateMany({
+        where: { companyId: id },
+        data: { active: false },
+      });
+
+      // Revoke all refresh tokens from company users
+      await tx.refreshToken.updateMany({
+        where: { user: { companyId: id } },
+        data: { revoked: true },
+      });
+
+      return tx.company.update({
+        where: { id },
+        data: { active: false },
+      });
     });
   }
 }

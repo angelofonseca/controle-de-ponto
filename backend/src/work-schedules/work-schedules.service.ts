@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
+  ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateWorkScheduleDto } from './dto/create-work-schedule.dto';
@@ -58,7 +59,18 @@ export class WorkSchedulesService {
   }
 
   async remove(id: string, requestingUser: any) {
-    await this.findOne(id, requestingUser);
+    const schedule = await this.findOne(id, requestingUser);
+
+    // Prevent deletion if employees are assigned to this schedule
+    const employeeCount = await this.prisma.employeeProfile.count({
+      where: { workScheduleId: id },
+    });
+
+    if (employeeCount > 0) {
+      throw new ConflictException(
+        `Não é possível excluir esta jornada. ${employeeCount} colaborador(es) ainda estão vinculados a ela.`,
+      );
+    }
 
     return this.prisma.workSchedule.delete({ where: { id } });
   }

@@ -126,6 +126,9 @@ Types: `feat`, `fix`, `chore`, `docs`, `test`, `refactor`, `style`, `perf`, `ci`
 - Update DTOs use `PartialType(CreateDto)` from `@nestjs/swagger`
 
 ### Validation
+
+**IMPORTANT: After every code change, validate the build succeeds.**
+
 - Global validation pipe: `whitelist: true, forbidNonWhitelisted: true`
 - All DTOs use `class-validator` decorators
 - All endpoints decorated with `@ApiTags`, `@ApiOperation`, `@ApiBearerAuth` for Swagger (available at `/api/docs`)
