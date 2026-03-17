@@ -9,7 +9,7 @@ export class QrcodeService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   async createSession(dto: CreateQrCodeSessionDto, requestingUser: any) {
     const expirationMinutes =

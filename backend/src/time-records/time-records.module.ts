@@ -9,4 +9,4 @@ import { TimeRecordsController } from './time-records.controller';
   providers: [TimeRecordsService],
   exports: [TimeRecordsService],
 })
-export class TimeRecordsModule { }
+export class TimeRecordsModule {}

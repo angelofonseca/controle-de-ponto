@@ -28,7 +28,7 @@ export class TimeRecordsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly facialService: FacialService,
-  ) { }
+  ) {}
 
   async createManual(dto: CreateManualTimeRecordDto, requestingUser: any) {
     await this.validateSequence(requestingUser.sub, dto.type);
@@ -139,7 +139,10 @@ export class TimeRecordsService {
       include: { user: { select: { id: true, name: true } } },
     });
 
-    await this.facialService.attachEventToTimeRecord(validation.eventId, record.id);
+    await this.facialService.attachEventToTimeRecord(
+      validation.eventId,
+      record.id,
+    );
     await this.updateAttendanceDay(requestingUser.sub, now);
 
     return {

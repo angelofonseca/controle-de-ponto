@@ -59,7 +59,7 @@ export class WorkSchedulesService {
   }
 
   async remove(id: string, requestingUser: any) {
-    const schedule = await this.findOne(id, requestingUser);
+    await this.findOne(id, requestingUser);
 
     // Prevent deletion if employees are assigned to this schedule
     const employeeCount = await this.prisma.employeeProfile.count({

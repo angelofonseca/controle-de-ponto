@@ -13,7 +13,7 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 @ApiBearerAuth('JWT-auth')
 @Controller('time-records')
 export class TimeRecordsController {
-  constructor(private readonly timeRecordsService: TimeRecordsService) { }
+  constructor(private readonly timeRecordsService: TimeRecordsService) {}
 
   @Post('manual')
   @ApiOperation({ summary: 'Registrar ponto manualmente' })

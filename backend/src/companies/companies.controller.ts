@@ -7,11 +7,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiBearerAuth,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Role } from '../generated/prisma/enums';
 import { CompaniesService } from './companies.service';
 import { UpdateCompanyDto } from './dto/update-company.dto';
@@ -22,7 +18,7 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 @ApiBearerAuth('JWT-auth')
 @Controller('companies')
 export class CompaniesController {
-  constructor(private readonly companiesService: CompaniesService) { }
+  constructor(private readonly companiesService: CompaniesService) {}
 
   @Get('me')
   @Roles(Role.COMPANY_ADMIN)
@@ -34,7 +30,10 @@ export class CompaniesController {
   @Patch('me')
   @Roles(Role.COMPANY_ADMIN)
   @ApiOperation({ summary: 'Atualizar empresa do usuário autenticado' })
-  async update(@CurrentUser() user: any, @Body() updateCompanyDto: UpdateCompanyDto) {
+  async update(
+    @CurrentUser() user: any,
+    @Body() updateCompanyDto: UpdateCompanyDto,
+  ) {
     return this.companiesService.update(user.companyId, updateCompanyDto);
   }
 

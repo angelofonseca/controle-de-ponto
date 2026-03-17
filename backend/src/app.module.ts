@@ -45,4 +45,4 @@ import { FacialModule } from './facial/facial.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
