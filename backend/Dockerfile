@@ -59,8 +59,6 @@ COPY prisma ./prisma/
 RUN npm ci --only=production && npm cache clean --force
 
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 
 EXPOSE 3000
 
