@@ -244,6 +244,31 @@ class ApiClient {
   async validateQrToken(token: string): Promise<{ valid: boolean; session: Partial<QrCodeSession> }> {
     return this.request('GET', `/qrcode/validate/${token}`, undefined, false);
   }
+
+  // Facial (admin)
+  async enrollFace(data: { images: string[]; userId: string }): Promise<{
+    templateId: string;
+    samplesUsed: number;
+    qualityScore: number | null;
+    engine: string;
+    version: string;
+  }> {
+    return this.request('POST', '/facial/enroll', data);
+  }
+
+  async getFaceStatus(userId: string): Promise<{
+    hasTemplate: boolean;
+    template: {
+      id: string;
+      createdAt: string;
+      samplesCount: number;
+      qualityScore: number | null;
+      engine: string;
+      version: string;
+    } | null;
+  }> {
+    return this.request('GET', `/facial/status/${userId}`);
+  }
 }
 
 export const api = new ApiClient(BASE_URL);

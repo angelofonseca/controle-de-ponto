@@ -20,7 +20,7 @@ interface ActorContext {
 
 export interface EnrollFaceDto {
   images: string[];
-  userId?: string;
+  userId: string;
   minConfidence?: number;
 }
 
@@ -48,13 +48,7 @@ export class FacialService {
   ) {}
 
   async enrollTemplate(actor: ActorContext, dto: EnrollFaceDto) {
-    const targetUserId = dto.userId ?? actor.sub;
-
-    if (actor.role !== 'COMPANY_ADMIN' && targetUserId !== actor.sub) {
-      throw new ForbiddenException(
-        'Apenas admins podem cadastrar face de terceiros',
-      );
-    }
+    const targetUserId = dto.userId;
 
     if (!dto.images || dto.images.length === 0) {
       throw new BadRequestException(
@@ -108,6 +102,25 @@ export class FacialService {
       qualityScore,
       engine: template.engine,
       version: template.version,
+    };
+  }
+
+  async getTemplateStatus(userId: string, companyId: string) {
+    const template = await this.prisma.faceTemplate.findFirst({
+      where: { userId, companyId, active: true },
+      select: {
+        id: true,
+        createdAt: true,
+        samplesCount: true,
+        qualityScore: true,
+        engine: true,
+        version: true,
+      },
+    });
+
+    return {
+      hasTemplate: !!template,
+      template,
     };
   }
 

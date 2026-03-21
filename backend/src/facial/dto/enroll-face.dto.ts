@@ -1,11 +1,10 @@
 import {
   ArrayMinSize,
   IsArray,
-  IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class EnrollFaceDto {
   @ApiProperty({
@@ -17,10 +16,9 @@ export class EnrollFaceDto {
   @IsString({ each: true })
   images: string[];
 
-  @ApiPropertyOptional({
-    description: 'Permite que admin cadastre face para outro colaborador',
+  @ApiProperty({
+    description: 'ID do colaborador para cadastrar template facial',
   })
-  @IsOptional()
   @IsUUID()
-  userId?: string;
+  userId: string;
 }

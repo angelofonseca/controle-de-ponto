@@ -109,6 +109,7 @@
               <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Depto.</th>
               <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Matrícula</th>
               <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Status</th>
+              <th class="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase">Ações</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
@@ -127,6 +128,14 @@
                   <span class="badge {emp.user?.active ? 'badge-success' : 'badge-danger'}">
                     {emp.user?.active ? 'Ativo' : 'Inativo'}
                   </span>
+                </td>
+                <td class="px-6 py-4">
+                  <a
+                    href="/admin/employees/facial?userId={emp.userId}"
+                    class="text-sm text-primary-600 hover:text-primary-800 font-medium"
+                  >
+                    Cadastrar face
+                  </a>
                 </td>
               </tr>
             {/each}
