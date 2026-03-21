@@ -34,6 +34,7 @@ services:
       JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:4173}
       QRCODE_EXPIRATION_MINUTES: ${QRCODE_EXPIRATION_MINUTES:-10}
+      FACE_ENGINE_URL: ${FACE_ENGINE_URL:-http://face-service:8001}
       NODE_ENV: ${NODE_ENV:-development}
       PORT: ${BACKEND_PORT:-3000}
     ports:
@@ -50,6 +51,25 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - controle_ponto_network
+
+  face-service:
+    build:
+      context: ./face-service
+      dockerfile: Dockerfile
+    container_name: controle_ponto_face
+    restart: unless-stopped
+    ports:
+      - '8001:8001'
+    volumes:
+      - face_models:/app/models
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:8001/health || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
     networks:
       - controle_ponto_network
 
@@ -82,6 +102,8 @@ services:
 volumes:
   postgres_data:
     name: controle_ponto_postgres_data
+  face_models:
+    name: controle_ponto_face_models
 
 networks:
   controle_ponto_network:

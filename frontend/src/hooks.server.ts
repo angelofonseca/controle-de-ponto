@@ -14,7 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set(
     'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=()'
+    'camera=(self), microphone=(), geolocation=()'
   );
 
   return response;
